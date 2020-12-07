@@ -15,7 +15,7 @@ class CreateMovieDetailsTable extends Migration
     {
         Schema::create('movie_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('movie_id');
+            $table->uuid('movie_id');
             $table->string('description')->nullable();
             $table->string('director')->nullable();
             $table->integer('duration_min');

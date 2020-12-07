@@ -14,8 +14,8 @@ class CreateCategoryMovieTable extends Migration
     public function up()
     {
         Schema::create('category_movie', function (Blueprint $table) {
-            $table->string('category_id');
-            $table->string('movie_id');
+            $table->uuid('category_id');
+            $table->uuid('movie_id');
         });
     }
 

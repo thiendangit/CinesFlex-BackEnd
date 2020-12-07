@@ -15,7 +15,7 @@ class CreateScreensTable extends Migration
     {
         Schema::create('screens', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('cinema_id');
+            $table->uuid('cinema_id');
             $table->string('name');
             $table->string('description')->nullable();
             $table->tinyInteger('type')->default(0);

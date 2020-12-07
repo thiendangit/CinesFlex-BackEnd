@@ -15,9 +15,9 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('booker_id');
-            $table->string('movie_screen_id');
-            $table->string('seat_id');
+            $table->uuid('booker_id');
+            $table->uuid('movie_screen_id');
+            $table->uuid('seat_id');
             $table->string('reference');
             $table->integer('price')->default(0);
             $table->timestamps();

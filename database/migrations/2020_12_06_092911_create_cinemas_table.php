@@ -15,7 +15,7 @@ class CreateCinemasTable extends Migration
     {
         Schema::create('cinemas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('region_id');
+            $table->uuid('region_id');
             $table->string('name');
             $table->string('description')->nullable();
             $table->tinyInteger('type')->default(0);

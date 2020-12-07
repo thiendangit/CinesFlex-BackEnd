@@ -15,8 +15,8 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('order_id');
-            $table->string('order_detailable_id');
+            $table->uuid('order_id');
+            $table->uuid('order_detailable_id');
             $table->string('order_detailable_type');
             $table->integer('quantity')->default(0);
             $table->integer('total')->default(0);

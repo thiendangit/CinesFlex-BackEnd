@@ -47,6 +47,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'name' => 'string',
+        'phone' => 'string',
+        'email' => 'string',
+        'type' => 'integer',
+        'status' => 'integer',
+        'email_verified_at' => 'datetime'
     ];
+
+    public function roles()
+    {
+      return $this->belongsToMany(Role::class);
+    }
+
 }

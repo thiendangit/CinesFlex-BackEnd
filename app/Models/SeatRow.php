@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class Seat extends Model
+class SeatRow extends Model
 {
     use HasFactory, Uuid;
 
@@ -14,18 +14,17 @@ class Seat extends Model
 
     public $incrementing = false;
 
+    public $timestamps = FALSE;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'seat_row_id',
-        'screen_id',
+        'reference',
         'name',
-        'description',
-        'type',
-        'status'
+        'description'
     ];
 
     /**
@@ -42,17 +41,8 @@ class Seat extends Model
      * @var array
      */
     protected $casts = [
-        'seat_row_id' => 'string',
-        'screen_id' => 'string',
+        'reference' => 'string',
         'name' => 'string',
-        'description' => 'string',
-        'type' => 'integer',
-        'status' => 'integer'
+        'description' => 'string'
     ];
-
-    public function seatRow()
-    {
-        return $this->belongsTo(SeatRow::class);
-    }
-
 }

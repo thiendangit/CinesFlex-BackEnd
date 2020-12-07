@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSeatsTable extends Migration
+class CreateSeatRowsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateSeatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('seats', function (Blueprint $table) {
+        Schema::create('seat_rows', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('seat_row_id');
-            $table->uuid('screen_id');
+            $table->string('reference');
             $table->string('name');
             $table->string('description')->nullable();
-            $table->tinyInteger('type')->default(0);
-            $table->tinyInteger('status')->default(0);
-            $table->timestamps();
         });
     }
 
@@ -32,6 +28,6 @@ class CreateSeatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seats');
+        Schema::dropIfExists('seat_rows');
     }
 }

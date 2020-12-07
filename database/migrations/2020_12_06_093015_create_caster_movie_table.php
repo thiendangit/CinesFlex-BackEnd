@@ -14,8 +14,8 @@ class CreateCasterMovieTable extends Migration
     public function up()
     {
         Schema::create('caster_movie', function (Blueprint $table) {
-            $table->string('caster_id');
-            $table->string('movie_id');
+            $table->uuid('caster_id');
+            $table->uuid('movie_id');
             $table->string('name')->nullable();
         });
     }

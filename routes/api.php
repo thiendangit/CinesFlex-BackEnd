@@ -28,6 +28,10 @@ Route::group(['namespace' => 'Auth'], function() {
 Route::middleware('auth:api')->group(function () {
     Route::group(['namespace' => 'Auth'], function() {
         Route::post('/logout', 'ApiAuthController@logout')->name('logout.api');
-
     });
+
+    // Route::resource('/', HomeController::class);
+
+
+
 });
