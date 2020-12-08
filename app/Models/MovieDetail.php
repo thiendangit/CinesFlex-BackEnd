@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class Caster extends Model
+class MovieDetail extends Model
 {
     use HasFactory, Uuid;
 
@@ -20,10 +20,14 @@ class Caster extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'movie_id',
         'description',
-        'type',
-        'status'
+        'director',
+        'duration_min',
+        'date_begin',
+        'date_end',
+        'rated',
+        'trailer_path'
     ];
 
     /**
@@ -40,14 +44,14 @@ class Caster extends Model
      * @var array
      */
     protected $casts = [
-        'name' => 'string',
+        'movie_id' => 'string',
         'description' => 'string',
-        'type' => 'integer',
-        'status' => 'integer'
+        'director' => 'string',
+        'duration_min' => 'integer',
+        'date_begin' => 'datetime',
+        'date_end' => 'datetime',
+        'rated' => 'integer',
+        'trailer_path' => 'string'
     ];
 
-    public function movies()
-    {
-        return $this->belongsToMany(Movies::class);
-    }
 }

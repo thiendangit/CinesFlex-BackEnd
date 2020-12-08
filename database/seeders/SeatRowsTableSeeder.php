@@ -23,6 +23,5 @@ class SeatRowsTableSeeder extends Seeder
             $model->description = Str::random(25);
             $model->save();
         }
-
     }
 }

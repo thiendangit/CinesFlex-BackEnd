@@ -28,7 +28,7 @@ class SeatsTableSeeder extends Seeder
                     $model->screen_id = $screen->id;
                     $model->name = $seatRow->reference . ($i + 1);
                     $model->description = Str::random(25);
-                    $model->type = 1;
+                    $model->type = rand(Seat::IS_AVAILABLE, Seat::IS_RESERVED);
                     $model->status = 1;
                     $model->save();
                 }
