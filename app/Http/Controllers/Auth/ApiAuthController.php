@@ -19,7 +19,7 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors' => $validator->errors()->all(), 'code' => 422], 422);
+            return response(['errors' => $validator->errors()->all()]);
         }
         $request['password'] = Hash::make($request['password']);
         $request['remember_token'] = Str::random(10);
@@ -30,9 +30,9 @@ class ApiAuthController extends Controller
                 'token' => $token
             ],
             'message' => 'You have been successfully sign up',
-            'code' => 200
-        ];;
-        return response($response, 200);
+            'success' => true
+        ];
+        return response($response);
     }
 
     public function login (Request $request) {
@@ -42,7 +42,7 @@ class ApiAuthController extends Controller
         ]);
         if ($validator->fails())
         {
-            return response(['errors'=>$validator->errors()->all(), 'code' => 422], 422);
+            return response(['errors'=>$validator->errors()->all()]);
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
@@ -54,23 +54,32 @@ class ApiAuthController extends Controller
                         'token' => $token
                     ],
                     'message' => 'You have been login',
-                    'code' => 200
+                    'success' => true
                 ];
-                return response($response, 200);
+                return response($response);
             } else {
-                $response = ['message' => 'Password mismatch', 'code' => 422];
-                return response($response, 422);
+                $response = [
+                    'message' => 'Password mismatch',
+                    'success' => false
+                ];
+                return response($response);
             }
         } else {
-            $response = ['message' =>'User does not exist', 'code' => 422];
-            return response($response, 422);
+            $response = [
+                'message' =>'User does not exist',
+                'success' => false
+            ];
+            return response($response);
         }
     }
 
     public function logout (Request $request) {
         $token = $request->user()->token();
         $token->revoke();
-        $response = ['message' => 'You have been successfully logged out!', 'code' => 200];
-        return response($response, 200);
+        $response = [
+            'message' => 'You have been successfully logged out!',
+            'success' => true
+        ];
+        return response($response);
     }
 }

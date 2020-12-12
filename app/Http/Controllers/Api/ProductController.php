@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Cinema;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class CinemaController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +14,7 @@ class CinemaController extends Controller
      */
     public function index()
     {
-        $response = [
-            'data' => 123,
-            'message' => 'Get list successfully',
-            'success' => true
-        ];
-        return response($response);
+        //
     }
 
     /**
@@ -46,10 +41,10 @@ class CinemaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cinema  $cinema
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Cinema $cinema)
+    public function show(Product $product)
     {
         //
     }
@@ -57,10 +52,10 @@ class CinemaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cinema  $cinema
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cinema $cinema)
+    public function edit(Product $product)
     {
         //
     }
@@ -69,10 +64,10 @@ class CinemaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cinema  $cinema
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cinema $cinema)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -80,10 +75,10 @@ class CinemaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Cinema  $cinema
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cinema $cinema)
+    public function destroy(Product $product)
     {
         //
     }

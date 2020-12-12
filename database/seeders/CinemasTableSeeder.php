@@ -23,7 +23,7 @@ class CinemasTableSeeder extends Seeder
             {
                 $model = new Cinema();
                 $model->region_id = $region->id;
-                $model->name = Str::random(10);
+                $model->name = $region->name . ' ' .$i;
                 $model->description = Str::random(100);
                 $model->type = 1;
                 $model->status = 1;

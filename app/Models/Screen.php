@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
+use Carbon\Carbon;
 
 class Screen extends Model
 {
@@ -48,4 +49,11 @@ class Screen extends Model
         'status' => 'integer'
     ];
 
+    /**
+     * Get the screen that owns the cinema.
+     */
+    public function cinema()
+    {
+        return $this->belongsTo(Cinema::class);
+    }
 }

@@ -29,9 +29,17 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['namespace' => 'Auth'], function() {
         Route::post('/logout', 'ApiAuthController@logout')->name('logout.api');
     });
+    Route::group(['namespace' => 'Api'], function() {
+        Route::apiResources([
+            'movies'        => MovieController::class,
+            'regions'       => RegionController::class,
+            'cinemas'       => CinemaController::class,
+            'movie-screens' => MovieScreenController::class,
+        ]);
 
-    // Route::resource('/', HomeController::class);
+        Route::post('/movie-screens/show-times-by-movie-n-region', 'MovieScreenController@showTimesByMovieNRegion');
+        Route::post('/movie-screens/show-times-by-movie-n-cinema', 'MovieScreenController@showTimesByMovieNCinema');
 
-
+    });
 
 });

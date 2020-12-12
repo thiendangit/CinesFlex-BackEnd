@@ -32,6 +32,8 @@ class Region extends Model
      * @var array
      */
     protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 
     /**
@@ -48,6 +50,6 @@ class Region extends Model
 
     public function cinemas()
     {
-        return $this->hasMany(Cinema::class);
+        return $this->hasMany(Cinema::class)->orderBy('name');
     }
 }

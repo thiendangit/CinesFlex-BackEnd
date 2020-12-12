@@ -24,3 +24,4 @@ Route::get('/clear-cache', function() {
     return 'FINISHED';
 });
 
+// Route::resource('cinemas', CinemaController::class);

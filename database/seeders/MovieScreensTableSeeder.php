@@ -23,17 +23,18 @@ class MovieScreensTableSeeder extends Seeder
         $listScreen  = Screen::all();
         foreach($listScreen as $screen)
         {
-            $hour = 1;
+            $day = 0;
             foreach($listMovie as $movie)
             {
                 $model = new MovieScreen();
                 $model->movie_id = $movie->id;
                 $model->screen_id = $screen->id;
-                $model->show_time = Carbon::now()->addHour($hour);
+                $model->cinema_id = $screen->cinema_id;
+                $model->show_time = Carbon::now()->addDay($day);
                 $model->type = 1;
                 $model->status = 1;
                 $model->save();
-                $hour++;
+                $day++;
             }
         }
     }

@@ -17,6 +17,7 @@ class CreateMovieScreensTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('movie_id');
             $table->uuid('screen_id');
+            $table->uuid('cinema_id');
             $table->dateTime('show_time');
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('status')->default(0);

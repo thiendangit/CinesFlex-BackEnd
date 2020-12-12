@@ -15,9 +15,10 @@ class RegionsTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 2; $i++) {
+        $regions = ['Ha Noi', 'Ho Chi Minh'];
+        foreach($regions as $region) {
             $model = new Region();
-            $model->name = Str::random(10);
+            $model->name = $region;
             $model->description = Str::random(100);
             $model->type = 1;
             $model->status = 1;

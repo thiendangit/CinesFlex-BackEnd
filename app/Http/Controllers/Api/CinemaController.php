@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Cinema;
 use Illuminate\Http\Request;
@@ -14,8 +14,9 @@ class CinemaController extends Controller
      */
     public function index()
     {
+        $data = Cinema::all();
         $response = [
-            'data' => 123,
+            'data' => $data,
             'message' => 'Get list successfully',
             'success' => true
         ];
