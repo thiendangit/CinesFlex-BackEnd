@@ -14,7 +14,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data = Product::all();
+        $response = [
+            'data' => $data,
+            'message' => 'Get list successfully',
+            'success' => true
+        ];
+        return response($response);
     }
 
     /**

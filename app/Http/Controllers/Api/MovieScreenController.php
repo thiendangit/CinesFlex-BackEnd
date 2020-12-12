@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class MovieScreenController extends Controller
 {
     /**
-     * Display a listing by day, movie_id, cinema_id.
+     * Display a listing by day, movie_id, region_id.
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,7 +40,7 @@ class MovieScreenController extends Controller
     }
 
     /**
-     * Display a listing by day, movie_id, cinema_id.
+     * Display a listing by 5 day, movie_id, cinema_id.
      *
      * @return \Illuminate\Http\Response
      */

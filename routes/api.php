@@ -35,11 +35,12 @@ Route::middleware('auth:api')->group(function () {
             'regions'       => RegionController::class,
             'cinemas'       => CinemaController::class,
             'movie-screens' => MovieScreenController::class,
+            'products'      => ProductController::class,
         ]);
 
         Route::post('/movie-screens/show-times-by-movie-n-region', 'MovieScreenController@showTimesByMovieNRegion');
         Route::post('/movie-screens/show-times-by-movie-n-cinema', 'MovieScreenController@showTimesByMovieNCinema');
-
+        Route::post('/seats/get-list-by-screen', 'SeatController@getListByScreen');
     });
 
 });
