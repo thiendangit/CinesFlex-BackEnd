@@ -68,6 +68,18 @@ class MovieScreen extends Model
         return  $dayOfWeeks[$date->dayOfWeek];
     }
 
+    /**
+     * Get the show time.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getShowTimeAttribute($show_time)
+    {
+        $date = new Carbon($show_time);
+        return $date->format('H:t');
+    }
+
      /**
      * Get the screen that owns the movie screen.
      */
@@ -75,5 +87,14 @@ class MovieScreen extends Model
     {
         return $this->belongsTo(Screen::class);
     }
+
+    /**
+     * Get the movie that owns the movie screen.
+     */
+    public function movie()
+    {
+        return $this->belongsTo(Movie::class);
+    }
+
 
 }

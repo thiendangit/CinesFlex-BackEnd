@@ -27,7 +27,8 @@ class MovieDetail extends Model
         'date_begin',
         'date_end',
         'rated',
-        'trailer_path'
+        'trailer_path',
+        'price'
     ];
 
     /**
@@ -51,7 +52,8 @@ class MovieDetail extends Model
         'date_begin' => 'datetime',
         'date_end' => 'datetime',
         'rated' => 'integer',
-        'trailer_path' => 'string'
+        'trailer_path' => 'string',
+        'price' => 'integer'
     ];
 
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
-class Product extends Model
+class OrderDetail extends Model
 {
     use HasFactory, Uuid;
 
@@ -14,21 +14,17 @@ class Product extends Model
 
     public $incrementing = false;
 
-    const FASTFOOD = 1;
-    const SOFTDRINK = 2;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'reference',
-        'name',
-        'description',
-        'price',
-        'type',
-        'status'
+        'order_id',
+        'order_detailable_id',
+        'order_detailable_type',
+        'quantity',
+        'total'
     ];
 
     /**
@@ -47,19 +43,18 @@ class Product extends Model
      * @var array
      */
     protected $casts = [
-        'reference' => 'string',
-        'name' => 'string',
-        'description' => 'string',
-        'price' => 'integer',
-        'type' => 'integer',
-        'status' => 'integer'
+        'order_id' => 'string',
+        'order_detailable_id' => 'string',
+        'order_detailable_type' => 'string',
+        'quantity' => 'integer',
+        'total' => 'integer'
     ];
 
     /**
-     * Get all of the product's order detail.
+     * Get all of the owning orderdetailable models.
      */
-    public function order_details()
+    public function order_detailable()
     {
-        return $this->morphMany(OrderDetail::class, 'order_detailable');
+        return $this->morphTo();
     }
 }

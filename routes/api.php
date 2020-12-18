@@ -38,9 +38,19 @@ Route::middleware('auth:api')->group(function () {
             'products'      => ProductController::class,
         ]);
 
+        // movie scren
         Route::post('/movie-screens/show-times-by-movie-n-region', 'MovieScreenController@showTimesByMovieNRegion');
         Route::post('/movie-screens/show-times-by-movie-n-cinema', 'MovieScreenController@showTimesByMovieNCinema');
+
+        // seat
         Route::post('/seats/get-list-by-screen', 'SeatController@getListByScreen');
+
+        // product
+        Route::post('/products/get-list-by-type', 'ProductController@getListByType');
+
+        // order
+        Route::post('/orders/booking-ticket', 'OrderController@bookingTicket');
+
     });
 
 });

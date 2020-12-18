@@ -38,6 +38,7 @@ class MovieDetailsTableSeeder extends Seeder
             $model->date_end = Carbon::now()->addMonth(1);
             $model->rated = rand(10, 18);
             $model->trailer_path = json_encode('https://www.youtube.com/watch?v=mrcONTmLm5k');
+            $model->price = 50000;
             $model->save();
             $movie->casters()->attach($listCaster, ['name'=> 'Actor']);
             $movie->categories()->attach($listCategory);

@@ -56,4 +56,12 @@ class Screen extends Model
     {
         return $this->belongsTo(Cinema::class);
     }
+
+    /**
+     * Get the seat that owns the screen.
+     */
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
 }

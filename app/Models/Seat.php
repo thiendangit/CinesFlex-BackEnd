@@ -37,7 +37,6 @@ class Seat extends Model
      * @var array
      */
     protected $hidden = [
-        'id',
         'screen_id',
         'seat_row_id',
         'description',

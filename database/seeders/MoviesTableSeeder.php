@@ -19,7 +19,7 @@ class MoviesTableSeeder extends Seeder
         foreach($movieNames as $name) {
             $model = new Movie();
             $model->name = $name;
-            $model->type = rand(Movie::NOWSHOWING, Movie::ISCOMMING);
+            $model->type = rand(Movie::NOW_SHOWING, Movie::IS_COMMING);
             $model->status = 1;
             $model->save();
         }

@@ -12,6 +12,34 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function getListByType(Request $request)
+    {
+        $inputs = $request->all();
+
+        $check = $this->checkExist($inputs, ['type']);
+        if($check['failed'] === true)
+        {
+            return $response = [
+                'message' => 'Required ' . $check['message'],
+                'success' => false,
+            ];
+            return response($response);
+        }
+
+        $data = Product::where('type', $inputs['type'])->get();
+        $response = [
+            'data' => $data,
+            'message' => 'Get list successfully',
+            'success' => true
+        ];
+        return response($response);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $data = Product::all();
@@ -87,5 +115,19 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    private function checkExist($inputs, array $array) {
+        foreach($array as $key){
+            if(!isset($inputs[$key])){
+                return [
+                    'failed' => true,
+                    'message' => $key
+                ];
+            }
+        }
+        return [
+            'failed' => false
+        ];
     }
 }

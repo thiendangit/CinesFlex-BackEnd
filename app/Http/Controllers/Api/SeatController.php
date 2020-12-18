@@ -31,6 +31,7 @@ class SeatController extends Controller
         if(sizeof($seats) > 0){
             foreach($seats as $seat) {
                 array_push($listSeat, [
+                    'id' => $seat->id,
                     'name' => $seat->name,
                     'seat_row' => $seat->seatRow->reference,
                     'type' => $seat->type,

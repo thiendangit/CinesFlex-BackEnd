@@ -14,8 +14,8 @@ class Movie extends Model
 
     public $incrementing = false;
 
-    const ISCOMMING = 1;
-    const NOWSHOWING = 2;
+    const IS_COMMING = 1;
+    const NOW_SHOWING = 2;
 
     /**
      * The attributes that are mass assignable.
