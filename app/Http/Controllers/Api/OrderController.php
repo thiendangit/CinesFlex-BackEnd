@@ -16,6 +16,33 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     /**
+     * Get history
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchHistory(Request $request)
+    {
+        $inputs = $request->all();
+
+        $check = $this->checkExist($inputs, ['show_time', 'seat_ids']);
+        if($check['failed'] === true)
+        {
+            return $response = [
+                'message' => 'Required ' . $check['message'],
+                'success' => false,
+            ];
+            return response($response);
+        }
+
+        $response = [
+            'data' => $listTicket,
+            'message' => 'Get list successfully',
+            'success' => true
+        ];
+        return response($response);
+    }
+
+    /**
      * Book ticket
      *
      * @return \Illuminate\Http\Response
@@ -34,12 +61,21 @@ class OrderController extends Controller
             return response($response);
         }
 
-        $inputs['booker_id'] = Auth::id();
+        $checkMovieScreen = $this->checkMovieScreenExist($inputs['show_time']);
+        if($checkMovieScreen['failed'] === true) {
+            return $response = [
+                'message' => 'Required ' . $checkMovieScreen['message'],
+                'success' => false
+            ];
+            return response($response);
+        }
+        $show_time_price = $checkMovieScreen['price'];
 
+
+        $inputs['booker_id'] = Auth::id();
         $listProduct = [];
         $products = [];
         $totalProduct = 0;
-
         if(isset($inputs['products'])) {
             foreach($inputs['products'] as $productInput) {
                 $product = Product::find($productInput['product_id']);
@@ -52,21 +88,9 @@ class OrderController extends Controller
 
             }
         }
-        // dd($products);
-
-        $movieScreen = MovieScreen::findOrFail($inputs['show_time']);
-        if(!isset($movieScreen)){
-            return [
-                'message' => 'Show time is not exist',
-                'success' => false
-            ];
-        }
-        $moviePrice = $movieScreen->movie->detail->price;
-        // $seats = Seat::whereIn('id', $inputs['seat_ids'])->where('type', Seat::IS_AVAILABLE)->get();
 
         $listTicket = [];
         $totalTicket = 0;
-
         foreach($inputs['seat_ids'] as $seat_id) {
             $ticket = Ticket::create([
                 'booker_id' => $inputs['booker_id'],
@@ -121,6 +145,26 @@ class OrderController extends Controller
             'success' => true
         ];
         return response($response);
+    }
+
+    private function getTotalProduct($inputs) {
+        return [];
+    }
+
+    private function checkMovieScreenExist($show_time_id) {
+        $movieScreen = MovieScreen::findOrFail($show_time_id);
+        if(isset($movieScreen)){
+            $moviePrice = $movieScreen->movie->detail->price;
+            return [
+                'failed' => false,
+                'price' => $moviePrice
+            ];
+        }
+
+        return [
+            'failed' => true,
+            'message' => 'Show time is not exist',
+        ];
     }
 
     /**
