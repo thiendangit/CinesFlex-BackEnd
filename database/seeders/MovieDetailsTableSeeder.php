@@ -8,6 +8,7 @@ use App\Models\Caster;
 use App\Models\Category;
 use App\Models\Language;
 use App\Models\MovieDetail;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -27,6 +28,8 @@ class MovieDetailsTableSeeder extends Seeder
 
         // the number in last is a size of array
         $listDirector = ['Jon Watts', 'Ari Aster', 'James Mangold', 'Jordan Peele', 'Martin Scorsese', 'Zack Snyder'];
+        $listUrl = ['/storage/images/end-game.jpg'];
+
         foreach($listMovie as $movie)
         {
             $model = new MovieDetail();
@@ -39,10 +42,16 @@ class MovieDetailsTableSeeder extends Seeder
             $model->rated = rand(10, 18);
             $model->trailer_path = json_encode('https://www.youtube.com/watch?v=mrcONTmLm5k');
             $model->price = 50000;
+            $model->rating = rand(7, 12);
             $model->save();
-            $movie->casters()->attach($listCaster, ['name'=> 'Actor']);
-            $movie->categories()->attach($listCategory);
-            $movie->languages()->attach($listLanguage);
+
+            $model->casters()->attach($listCaster, ['name'=> 'Actor']);
+            $model->categories()->attach($listCategory);
+            $model->languages()->attach($listLanguage);
+
+            $image = new Image();
+            $image->url = $listUrl[0];
+            $model->images()->save($image);
         }
     }
 }

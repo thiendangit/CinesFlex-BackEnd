@@ -26,7 +26,7 @@ class ProductController extends Controller
             return response($response);
         }
 
-        $data = Product::where('type', $inputs['type'])->get();
+        $data = Product::where('type', $inputs['type'])->with('images')->get();
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',
@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = Product::all();
+        $data = Product::with('images')->get();
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',

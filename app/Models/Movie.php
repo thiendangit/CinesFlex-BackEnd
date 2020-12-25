@@ -53,19 +53,4 @@ class Movie extends Model
     {
         return $this->hasOne(MovieDetail::class);
     }
-
-    public function casters()
-    {
-        return $this->belongsToMany(Caster::class);
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
-    public function languages()
-    {
-        return $this->belongsToMany(Language::class);
-    }
 }

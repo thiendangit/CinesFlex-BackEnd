@@ -52,4 +52,12 @@ class Caster extends Model
     {
         return $this->belongsToMany(Movies::class);
     }
+
+     /**
+     * Get the caster's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

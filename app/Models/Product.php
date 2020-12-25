@@ -62,4 +62,12 @@ class Product extends Model
     {
         return $this->morphMany(OrderDetail::class, 'order_detailable');
     }
+
+     /**
+     * Get the product's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

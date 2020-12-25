@@ -14,7 +14,8 @@ class CinemaController extends Controller
      */
     public function index()
     {
-        $data = Cinema::all();
+        $data = Cinema::with('images')->get();
+
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',

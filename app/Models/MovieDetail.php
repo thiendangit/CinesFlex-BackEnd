@@ -28,7 +28,8 @@ class MovieDetail extends Model
         'date_end',
         'rated',
         'trailer_path',
-        'price'
+        'price',
+        'rating'
     ];
 
     /**
@@ -53,7 +54,30 @@ class MovieDetail extends Model
         'date_end' => 'datetime',
         'rated' => 'integer',
         'trailer_path' => 'string',
-        'price' => 'integer'
+        'price' => 'integer',
+        'rating' => 'integer'
     ];
 
+    public function casters()
+    {
+        return $this->belongsToMany(Caster::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
+    }
+
+    /**
+     * Get the movie's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

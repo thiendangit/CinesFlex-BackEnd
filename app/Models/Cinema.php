@@ -71,4 +71,12 @@ class Cinema extends Model
 
         return $this->hasMany(MovieScreen::class)->whereBetween('show_time',[$today, $next5Day])->orderBy('show_time');
     }
+
+    /**
+     * Get the cinema's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

@@ -15,7 +15,7 @@ class SeatRowsTableSeeder extends Seeder
      */
     public function run()
     {
-        $alphaBet = ['A', 'B', 'C', 'D', 'E'];
+        $alphaBet = ['A', 'B', 'C', 'D', 'E', 'F'];
         foreach($alphaBet as $char) {
             $model = new SeatRow();
             $model->reference = $char;

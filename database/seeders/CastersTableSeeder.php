@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Caster;
+use App\Models\Image;
 use Illuminate\Support\Str;
 
 class CastersTableSeeder extends Seeder
@@ -16,6 +17,7 @@ class CastersTableSeeder extends Seeder
     public function run()
     {
         $casters = ['Chris Evans', 'Chris Hemsworth', 'Chris Pratt', 'Robert Downey Jr.', 'Mark Ruffalo'];
+        $listUrl = ['/storage/images/chris-evan.jpg'];
         foreach($casters as $caster) {
             $model = new Caster();
             $model->name = $caster;
@@ -23,6 +25,10 @@ class CastersTableSeeder extends Seeder
             $model->type = 1;
             $model->status = 1;
             $model->save();
+
+            $image = new Image();
+            $image->url = $listUrl[0];
+            $model->images()->save($image);
         }
     }
 }

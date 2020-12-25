@@ -15,7 +15,7 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['Action', 'Adventure', 'Comedy', 'Crime & Gangster', 'Drama', 'Epics / Hisorical'];
+        $categories = ['Action', 'Adventure'];
         foreach($categories as $category) {
             $model = new Category();
             $model->title = $category;

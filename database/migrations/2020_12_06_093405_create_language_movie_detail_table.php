@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLanguageMovieTable extends Migration
+class CreateLanguageMovieDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLanguageMovieTable extends Migration
      */
     public function up()
     {
-        Schema::create('language_movie', function (Blueprint $table) {
+        Schema::create('language_movie_detail', function (Blueprint $table) {
             $table->uuid('language_id');
-            $table->uuid('movie_id');
+            $table->uuid('movie_detail_id');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateLanguageMovieTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('language_movie');
+        Schema::dropIfExists('language_movie_detail');
     }
 }

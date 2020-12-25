@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCasterMovieTable extends Migration
+class CreateCasterMovieDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCasterMovieTable extends Migration
      */
     public function up()
     {
-        Schema::create('caster_movie', function (Blueprint $table) {
+        Schema::create('caster_movie_detail', function (Blueprint $table) {
             $table->uuid('caster_id');
-            $table->uuid('movie_id');
+            $table->uuid('movie_detail_id');
             $table->string('name')->nullable();
         });
     }
@@ -27,6 +27,6 @@ class CreateCasterMovieTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caster_movie');
+        Schema::dropIfExists('caster_movie_detail');
     }
 }
