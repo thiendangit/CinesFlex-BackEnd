@@ -60,7 +60,6 @@ class OrderController extends Controller
             ];
             return response($response);
         }
-
         $checkMovieScreen = $this->checkMovieScreenExist($inputs['show_time']);
         if($checkMovieScreen['failed'] === true) {
             return $response = [
@@ -70,7 +69,6 @@ class OrderController extends Controller
             return response($response);
         }
         $show_time_price = $checkMovieScreen['price'];
-
 
         $inputs['booker_id'] = Auth::id();
         $listProduct = [];
@@ -152,7 +150,7 @@ class OrderController extends Controller
     }
 
     private function checkMovieScreenExist($show_time_id) {
-        $movieScreen = MovieScreen::findOrFail($show_time_id);
+        $movieScreen = MovieScreen::find($show_time_id);
         if(isset($movieScreen)){
             $moviePrice = $movieScreen->movie->detail->price;
             return [
