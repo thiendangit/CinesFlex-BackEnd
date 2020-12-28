@@ -22,7 +22,7 @@ class SeatsTableSeeder extends Seeder
 
         foreach($listScreen as $screen) {
             foreach($listSeatRow as $seatRow) {
-                for($i = 0; $i < 2; $i++) {
+                for($i = 0; $i <= 5; $i++) {
                     $model = new Seat();
                     $model->seat_row_id = $seatRow->id;
                     $model->screen_id = $screen->id;

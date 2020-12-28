@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
 
 class Image extends Model
 {
@@ -43,4 +44,11 @@ class Image extends Model
         'imageable_type' => 'string'
     ];
 
+      /**
+     * Get all of the owning imageable models.
+     */
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
 }

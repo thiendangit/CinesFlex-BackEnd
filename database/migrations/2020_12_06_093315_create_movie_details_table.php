@@ -24,6 +24,7 @@ class CreateMovieDetailsTable extends Migration
             $table->integer('rated')->nullable();
             $table->string('trailer_path')->nullable();
             $table->integer('price')->default(0);
+            $table->integer('rating')->default(0);
             $table->timestamps();
         });
     }

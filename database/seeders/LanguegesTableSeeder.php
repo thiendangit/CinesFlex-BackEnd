@@ -15,7 +15,7 @@ class LanguegesTableSeeder extends Seeder
      */
     public function run()
     {
-        $languages = ['Vietnamese', 'English', 'Japanese'];
+        $languages = ['Vietnamese', 'English'];
         foreach($languages as $language) {
             $model = new Language();
             $model->title = $language;

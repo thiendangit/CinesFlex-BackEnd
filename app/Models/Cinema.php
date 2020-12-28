@@ -69,6 +69,14 @@ class Cinema extends Model
         $today = Carbon::yesterday();
         $next5Day = Carbon::now()->addDays(4);
 
-        return $this->hasMany(MovieScreen::class)->whereBetween('show_time',[$today, $next5Day])->orderBy('show_time');
+        return $this->hasMany(MovieScreen::class)->whereBetween('show_time',[$today, $next5Day])->with('movie')->orderBy('show_time');
+    }
+
+    /**
+     * Get the cinema's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

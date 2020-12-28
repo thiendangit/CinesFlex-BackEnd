@@ -15,7 +15,7 @@ class MovieScreen extends Model
 
     public $incrementing = false;
 
-    protected $appends = ['day', 'day_of_week'];
+    protected $appends = ['day', 'day_of_week', 'price'];
 
     /**
      * The attributes that are mass assignable.
@@ -68,6 +68,10 @@ class MovieScreen extends Model
         return  $dayOfWeeks[$date->dayOfWeek];
     }
 
+    function getPriceAttribute() {
+        return MovieDetail::where('movie_id', $this->movie_id)->get()[0]->price ?? 0;
+    }
+
     /**
      * Get the show time.
      *
@@ -95,6 +99,8 @@ class MovieScreen extends Model
     {
         return $this->belongsTo(Movie::class);
     }
+
+
 
 
 }

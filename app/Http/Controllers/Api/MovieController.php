@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Movie;
+use App\Models\MovieDetail;
+
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -14,7 +16,8 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $data = Movie::all();
+        $data = Movie::with('detail.casters.images', 'detail.categories', 'detail.languages', 'detail.images')->get();
+
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',
