@@ -139,7 +139,7 @@ class OrderController extends Controller
 
         $response = [
             'data' => $listTicket,
-            'message' => 'Get list successfully',
+            'message' => 'Create Order Successfully',
             'success' => true
         ];
         return response($response);
