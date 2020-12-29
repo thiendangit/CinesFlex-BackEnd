@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Ticket;
 use App\Models\MovieScreen;
 use App\Models\Seat;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -23,19 +24,11 @@ class OrderController extends Controller
     public function fetchHistory(Request $request)
     {
         $inputs = $request->all();
-
-        $check = $this->checkExist($inputs, ['show_time', 'seat_ids']);
-        if($check['failed'] === true)
-        {
-            return $response = [
-                'message' => 'Required ' . $check['message'],
-                'success' => false,
-            ];
-            return response($response);
-        }
+        $user_id = Auth::user()->id;
+        $user = User::whereId($user_id)->with('orders', 'orders.details')->get();
 
         $response = [
-            'data' => $listTicket,
+            'data' => $user,
             'message' => 'Get list successfully',
             'success' => true
         ];

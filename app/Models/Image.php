@@ -44,7 +44,7 @@ class Image extends Model
         'imageable_type' => 'string'
     ];
 
-      /**
+    /**
      * Get all of the owning imageable models.
      */
     public function imageable()

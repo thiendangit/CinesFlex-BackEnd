@@ -32,6 +32,7 @@ Route::group(['namespace' => 'Api'], function() {
         'cinemas'       => CinemaController::class,
         'movie-screens' => MovieScreenController::class,
         'products'      => ProductController::class,
+        'users'         => UserController::class,
     ]);
 
     // movie scren
@@ -53,6 +54,10 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['namespace' => 'Api'], function() {
         // order
         Route::post('/orders/booking-ticket', 'OrderController@bookingTicket');
+        Route::post('/orders/fetch-history', 'OrderController@fetchHistory');
+
+        // user
+        Route::post('/users/update-profile', 'UserController@updateProfile');
     });
 
 });

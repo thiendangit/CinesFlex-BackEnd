@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('voucher_id')->nullable();
+            $table->uuid('booker_id');
             $table->string('reference');
             $table->integer('paid')->default(0);
             $table->integer('total_paid')->default(0);
