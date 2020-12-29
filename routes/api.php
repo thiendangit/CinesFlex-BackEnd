@@ -53,6 +53,8 @@ Route::middleware('auth:api')->group(function () {
     Route::group(['namespace' => 'Api'], function() {
         // order
         Route::post('/orders/booking-ticket', 'OrderController@bookingTicket');
+        Route::post('/orders/fetch-history', 'OrderController@fetchHistory');
+
     });
 
 });

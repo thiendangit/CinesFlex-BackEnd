@@ -19,7 +19,7 @@ class MovieScreenController extends Controller
     {
         $inputs = $request->all();
 
-        $check = $this->checkExist($inputs, ['movie_id', 'region_id']);
+        $check = $this->checkExist($inputs, ['region_id']);
         if($check['failed'] === true)
         {
             return $response = [
@@ -29,7 +29,15 @@ class MovieScreenController extends Controller
             return response($response);
         }
 
-        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+        $listCinema = [];
+        if(isset($inputs['movie_id'])) {
+            // $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+            $listCinema = Cinema::whereHas('show_times', function ($query) use ($inputs) {
+                $query->where('movie_id', $inputs['movie_id']);
+            })->with('show_times')->get();
+        } else {
+            $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+        }
 
         $response = [
             'data' => $listCinema,

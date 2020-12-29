@@ -21,6 +21,7 @@ class Order extends Model
      */
     protected $fillable = [
         'voucher_id',
+        'booker_id',
         'reference',
         'paid',
         'total_paid',
@@ -45,6 +46,7 @@ class Order extends Model
      */
     protected $casts = [
         'voucher_id' => 'string',
+        'booker_id' => 'string',
         'reference' => 'string',
         'paid' => 'integer',
         'total_paid' => 'integer',
@@ -55,7 +57,7 @@ class Order extends Model
 
     public function details()
     {
-        return $this->belongsToMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class);
     }
 
 }
