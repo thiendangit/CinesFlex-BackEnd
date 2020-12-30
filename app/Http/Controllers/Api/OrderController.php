@@ -9,6 +9,7 @@ use App\Models\Ticket;
 use App\Models\MovieScreen;
 use App\Models\Seat;
 use App\Models\User;
+use App\Models\Voucher;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -24,11 +25,19 @@ class OrderController extends Controller
     public function fetchHistory(Request $request)
     {
         $inputs = $request->all();
-        $user_id = Auth::user()->id;
-        $user = User::whereId($user_id)->with('orders', 'orders.details')->get();
+        $userId = Auth::user()->id;
+        // $user = User::whereId($user_id)->with('orders', 'orders.details')->get();
 
+        $data = [];
+        $listOrder = Order::where('booker_id', $userId)->get();
+        if(sizeof($listOrder) > 0) {
+            $listOrderId = array_column($listOrder, 'id');
+            $item = OrderDetail::whereIn('order_id', $listOrderId)->get();
+
+        }
+        
         $response = [
-            'data' => $user,
+            'data' => $data,
             'message' => 'Get list successfully',
             'success' => true
         ];
@@ -53,97 +62,105 @@ class OrderController extends Controller
             ];
             return response($response);
         }
-        $checkMovieScreen = $this->checkMovieScreenExist($inputs['show_time']);
-        if($checkMovieScreen['failed'] === true) {
+        $getTickPrice = $this->getTickPrice($inputs['show_time']);
+        if($getTickPrice['failed'] === true) {
             return $response = [
-                'message' => 'Required ' . $checkMovieScreen['message'],
+                'message' => 'Required ' . $getTickPrice['message'],
                 'success' => false
             ];
             return response($response);
         }
-        $show_time_price = $checkMovieScreen['price'];
 
         $inputs['booker_id'] = Auth::id();
-        $listProduct = [];
-        $products = [];
-        $totalProduct = 0;
-        if(isset($inputs['products'])) {
-            foreach($inputs['products'] as $productInput) {
-                $product = Product::find($productInput['product_id']);
-                $totalProduct += ($product->price * $productInput['product_quantity']) ?? 0;
-                array_push($listProduct, $product);
+        $ticketPrice = $getTickPrice['price'];
+        $tickets = $this->addTicket($inputs, $ticketPrice);
+        $products = $this->getProduct($inputs['products']);
 
-                if(!isset($products[$product->id])){
-                    $products[$product->id] = $productInput['product_quantity'];
-                }
+        $total_ticket = array_sum(array_column($tickets, 'price')) ?? 0;
+        $total_product = array_sum(array_column($products, 'total')) ?? 0;
 
+        $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
+        $total_paid_discount = ($total_ticket + $total_product) * $voucher->value / 100;
+
+        $order = Order::create([
+            'voucher_id' => $inputs['voucher_id'] ?? null,
+            'booker_id' => $inputs['booker_id'],
+            'reference' => 'ORD' . Str::random(6),
+            'paid' => $total_ticket + $total_product,
+            'total_paid' => $total_ticket + $total_product - $total_paid_discount,
+            'type' => 1,
+            'status' => 1
+        ]);
+
+        if(isset($order)) {
+            $orderId = $order->id;
+            foreach($tickets as $ticket) {
+                $orderDetails = OrderDetail::create([
+                    'order_id' => $orderId,
+                    'order_detailable_id' => $ticket->id,
+                    'order_detailable_type' => Ticket::class,
+                    'quantity' => sizeof($tickets),
+                    'total' => $total_ticket
+                ]);
+                $order->details()->save($orderDetails);
             }
-        }
-
-        $listTicket = [];
-        $totalTicket = 0;
-        foreach($inputs['seat_ids'] as $seat_id) {
-            $ticket = Ticket::create([
-                'booker_id' => $inputs['booker_id'],
-                'movie_screen_id' => $inputs['show_time'],
-                'seat_id' => $seat_id,
-                'reference' => 'TIC' . Str::random(6),
-                'price' => $moviePrice ?? 50000,
-            ]);
-            $seat = Seat::whereId($seat_id)->update(['type' => Seat::IS_AVAILABLE]);
-            $totalTicket += $moviePrice ?? 50000;
-            array_push($listTicket, $ticket);
-        }
-
-        if(sizeof($listTicket) > 0) {
-            $order = Order::create([
-                'reference' => 'ORD' . Str::random(6),
-                'paid' => array_sum(array_column($listTicket, 'price')) + $totalProduct,
-                'total_paid' => array_sum(array_column($listTicket, 'price')) + $totalProduct,
-                'type' => 1,
-                'status' => 1
-            ]);
-
-            if(isset($order)) {
-                foreach($listTicket as $ticket) {
+            
+            if(sizeof($products) > 0) {
+                foreach($products as $product) {
                     $orderDetails = OrderDetail::create([
-                        'order_id' => $order->id,
-                        'order_detailable_id' => $ticket->id,
-                        'order_detailable_type' => Ticket::class,
-                        'quantity' => 1,
-                        'total' => $ticket->price
+                        'order_id' => $orderId,
+                        'order_detailable_id' => $product['id'],
+                        'order_detailable_type' => Product::class,
+                        'quantity' => $product['quantity'],
+                        'total' => $product['price'] * $product['quantity']
                     ]);
+                    $order->details()->save($orderDetails);
                 }
-
-                if(sizeof($listProduct) > 0) {
-                    foreach($listProduct as $product) {
-                        $orderDetails = OrderDetail::create([
-                            'order_id' => $order->id,
-                            'order_detailable_id' => $product->id,
-                            'order_detailable_type' => Product::class,
-                            'quantity' => $products[$product->id],
-                            'total' => $product->price * $products[$product->id]
-                        ]);
-                    }
-                }
-
             }
-        }
 
+        }
+        
         $response = [
-            'data' => $listTicket,
+            'data' => $order,
             'message' => 'Create Order Successfully',
             'success' => true
         ];
         return response($response);
     }
 
-    private function getTotalProduct($inputs) {
-        return [];
+    private function getProduct(array $inputs) {
+        $products = [];
+        foreach($inputs as $productInput) {
+            $product = Product::find($productInput['product_id']);
+            array_push($products, [
+                'id' => $product->id,
+                'quantity' => $productInput['product_quantity'],
+                'price' => $product->price,
+                'total' => $productInput['product_quantity'] * $product->price 
+            ]);
+        }
+
+        return $products;
     }
 
-    private function checkMovieScreenExist($show_time_id) {
-        $movieScreen = MovieScreen::find($show_time_id);
+    private function addTicket($inputs, $ticketPrice) {
+        $tickets = [];
+        foreach($inputs['seat_ids'] as $seat_id) {
+            $ticket = Ticket::create([
+                'booker_id' => $inputs['booker_id'],
+                'movie_screen_id' => $inputs['show_time'],
+                'seat_id' => $seat_id,
+                'reference' => 'TIC' . Str::random(6),
+                'price' => $ticketPrice ?? 50000,
+            ]);
+            $seat = Seat::whereId($seat_id)->update(['type' => Seat::IS_AVAILABLE]);
+            array_push($tickets, $ticket);
+        }
+        return $tickets;
+    }
+
+    private function getTickPrice($showTimeId) {
+        $movieScreen = MovieScreen::find($showTimeId);
         if(isset($movieScreen)){
             $moviePrice = $movieScreen->movie->detail->price;
             return [

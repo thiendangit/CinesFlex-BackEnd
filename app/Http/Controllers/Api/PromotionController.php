@@ -14,7 +14,13 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+        $data = Promotion::with('vouchers')->get();
+        $response = [
+            'data' => $data,
+            'message' => 'Get list successfully',
+            'success' => true
+        ];
+        return response($response);
     }
 
     /**

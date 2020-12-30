@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,6 +14,15 @@ class UserController extends Controller
 
         $inputs = $request->all();
         $user = Auth::user();
+        foreach($inputs as $data) {
+            if($data === '' || $data === null) {
+                return [
+                    'message' => 'Data not empty',
+                    'success' => false
+                ];
+            }
+        }
+
         $user->update($inputs);
 
         $response = [
