@@ -10,6 +10,32 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     /**
+     * Search function.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $inputs = $request->all();
+
+        $query = Movie::where('status', 1);
+        if(isset($inputs['name'])) {
+            $query->where('name', 'like', '%' . $inputs['name']. '%');
+        }
+        
+        $query->with('detail.casters.images', 'detail.categories', 'detail.languages', 'detail.images');
+        $data = $query->get();
+        
+        $response = [
+            'data' => $data,
+            'message' => 'Get list successfully',
+            'success' => true
+        ];
+        return response($response);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

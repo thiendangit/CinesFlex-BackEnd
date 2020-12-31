@@ -3,10 +3,45 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Voucher;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
 {
+    /**
+     * apply voucher.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function apply(Request $request)
+    {
+        $inputs = $request->all();
+        $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->with('promotion')->first();
+
+        
+        if(isset($voucher)) {
+            $now = Carbon::now();
+
+            if($now->lt($voucher->promotion->date_begin) || $now->gt($voucher->promotion->date_end)) {
+                return [
+                    'data' => $voucher,
+                    'message' => 'Voucher is expired',
+                    'success' => false
+                ];
+            }
+        }
+
+        $response = [
+            'data' => $voucher,
+            'message' => 'Apply voucher successfully',
+            'success' => true
+        ];
+        return response($response);
+
+    }
+
     /**
      * Display a listing of the resource.
      *

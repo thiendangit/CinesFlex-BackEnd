@@ -33,6 +33,7 @@ Route::group(['namespace' => 'Api'], function() {
         'movie-screens' => MovieScreenController::class,
         'products'      => ProductController::class,
         'users'         => UserController::class,
+        'promotions'    => PromotionController::class,
     ]);
 
     // movie scren
@@ -44,6 +45,14 @@ Route::group(['namespace' => 'Api'], function() {
 
     // product
     Route::post('/products/get-list-by-type', 'ProductController@getListByType');
+
+    // movie
+    Route::post('/movies/search', 'MovieController@search');
+
+    // voucher
+    Route::post('/vouchers/apply', 'VoucherController@apply');
+    
+
 });
 
 Route::middleware('auth:api')->group(function () {
