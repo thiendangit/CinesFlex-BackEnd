@@ -80,7 +80,10 @@ class OrderController extends Controller
         $total_product = array_sum(array_column($products, 'total')) ?? 0;
 
         $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
-        $total_paid_discount = ($total_ticket + $total_product) * $voucher->value / 100;
+        $total_paid_discount = 0;
+        if(isset($voucher)) {
+            $total_paid_discount = ($total_ticket + $total_product) * $voucher->value / 100;
+        }
 
         $order = Order::create([
             'voucher_id' => $inputs['voucher_id'] ?? null,
