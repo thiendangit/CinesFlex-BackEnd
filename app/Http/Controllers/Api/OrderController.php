@@ -79,14 +79,16 @@ class OrderController extends Controller
         $total_ticket = array_sum(array_column($tickets, 'price')) ?? 0;
         $total_product = array_sum(array_column($products, 'total')) ?? 0;
 
-        $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
         $total_paid_discount = 0;
+        if(isset($inputs['voucher_id'])) {
+            $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
+        }
         if(isset($voucher)) {
             $total_paid_discount = ($total_ticket + $total_product) * $voucher->value / 100;
         }
 
         $order = Order::create([
-            'voucher_id' => $inputs['voucher_id'] ?? null,
+            'voucher_id' => isset($inputs['voucher_id']) ? $inputs['voucher_id'] : null,
             'booker_id' => $inputs['booker_id'],
             'reference' => 'ORD' . Str::random(6),
             'paid' => $total_ticket + $total_product,
