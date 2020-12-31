@@ -12,19 +12,18 @@ class VoucherController extends Controller
     /**
      * apply voucher.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function apply(Request $request)
     {
         $inputs = $request->all();
-        $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->with('promotion')->first();
+        $voucher = Voucher::where('reference', $inputs['code'])->where('status', 1)->with('promotion')->first();
 
-        
-        if(isset($voucher)) {
+        if (isset($voucher)) {
             $now = Carbon::now();
 
-            if($now->lt($voucher->promotion->date_begin) || $now->gt($voucher->promotion->date_end)) {
+            if ($now->lt($voucher->promotion->date_begin) || $now->gt($voucher->promotion->date_end)) {
                 return [
                     'data' => $voucher,
                     'message' => 'Voucher is expired',
@@ -65,7 +64,7 @@ class VoucherController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -76,7 +75,7 @@ class VoucherController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Voucher  $voucher
+     * @param \App\Models\Voucher $voucher
      * @return \Illuminate\Http\Response
      */
     public function show(Voucher $voucher)
@@ -87,7 +86,7 @@ class VoucherController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Voucher  $voucher
+     * @param \App\Models\Voucher $voucher
      * @return \Illuminate\Http\Response
      */
     public function edit(Voucher $voucher)
@@ -98,8 +97,8 @@ class VoucherController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Voucher  $voucher
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Voucher $voucher
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Voucher $voucher)
@@ -110,7 +109,7 @@ class VoucherController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Voucher  $voucher
+     * @param \App\Models\Voucher $voucher
      * @return \Illuminate\Http\Response
      */
     public function destroy(Voucher $voucher)
