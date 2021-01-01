@@ -33,13 +33,13 @@ class OrderController extends Controller
             foreach($listOrder as $order) {
                 foreach($order->details as $detailable) {
                     if($detailable->order_detailable_type == 'App\Models\Product') {
-                        $product = Product::find($detailable->order_detailable_id)->with('images')->first();
+                        $product = Product::where('id', $detailable->order_detailable_id)->with('images')->first();
                         $detailable->order_detailable->images = $product->images;
                         $detailable->type = 1;
                     } else if($detailable->order_detailable_type == 'App\Models\Ticket'){
-                        $ticket = Ticket::find($detailable->order_detailable_id)->with('seat')->first();
-                        $showTime = MovieScreen::find($ticket->movie_screen_id)->first();
-                        $movie = Movie::find($showTime->movie_id)->with('detail.images', 'detail.categories')->first();
+                        $ticket = Ticket::where('id', $detailable->order_detailable_id)->with('seat')->first();
+                        $showTime = MovieScreen::where('id', $ticket->movie_screen_id)->first();
+                        $movie = Movie::where('id', $showTime->movie_id)->with('detail.images', 'detail.categories')->first();
                         $detailable->seat =$ticket->seat->name;
                         $order->show_time = $showTime;
                         $order->movie = $movie;
@@ -150,7 +150,7 @@ class OrderController extends Controller
     private function getProduct(array $inputs) {
         $products = [];
         foreach($inputs as $productInput) {
-            $product = Product::find($productInput['product_id']);
+            $product = Product::where('id', $productInput['product_id']);
             array_push($products, [
                 'id' => $product->id,
                 'quantity' => $productInput['product_quantity'],
@@ -179,7 +179,7 @@ class OrderController extends Controller
     }
 
     private function getTickPrice($showTimeId) {
-        $movieScreen = MovieScreen::find($showTimeId);
+        $movieScreen = MovieScreen::where('id', $showTimeId);
         if(isset($movieScreen)){
             $moviePrice = $movieScreen->movie->detail->price;
             return [
