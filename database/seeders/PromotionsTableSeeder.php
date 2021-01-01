@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Promotion;
 use App\Models\Voucher;
+use App\Models\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -17,6 +18,7 @@ class PromotionsTableSeeder extends Seeder
      */
     public function run()
     {
+        $listUrl = ['/storage/images/promotion.jpg'];
         for($i = 0; $i < 6; $i++) {
             $model = new Promotion();
             $model->title = Str::random(15);
@@ -34,6 +36,10 @@ class PromotionsTableSeeder extends Seeder
             $modelVoucher->type = 1;
             $modelVoucher->status = 1;
             $model->vouchers()->save($modelVoucher);
+
+            $image = new Image();
+            $image->url = $listUrl[0];
+            $model->images()->save($image);
         }
     }
 }
