@@ -10,6 +10,7 @@ use App\Models\MovieScreen;
 use App\Models\Seat;
 use App\Models\User;
 use App\Models\Voucher;
+use App\Models\Movie;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     /**
-     * Get history
+     * Get history  
      *
      * @return \Illuminate\Http\Response
      */
@@ -26,14 +27,26 @@ class OrderController extends Controller
     {
         $inputs = $request->all();
         $userId = Auth::id();
-        // $user = User::whereId($user_id)->with('orders', 'orders.details')->get();
-
-        $data = [];
         $listOrder = Order::where('booker_id', $userId)->with('details', 'details.order_detailable')->get();
+        
         if(sizeof($listOrder) > 0) {
-            // $listOrderId = array_column($listOrder, 'id');
-            // $item = OrderDetail::whereIn('order_id', $listOrderId)->get();
-
+            foreach($listOrder as $order) {
+                foreach($order->details as $detailable) {
+                    if($detailable->order_detailable_type == 'App\Models\Product') {
+                        $product = Product::find($detailable->order_detailable_id)->with('images')->first();
+                        $detailable->order_detailable->images = $product->images;
+                        $detailable->type = 1;
+                    } else if($detailable->order_detailable_type == 'App\Models\Ticket'){
+                        $ticket = Ticket::find($detailable->order_detailable_id)->first();
+                        $showTime = MovieScreen::find($ticket->movie_screen_id)->first();
+                        $movie = Movie::find($showTime->movie_id)->with('detail.images', 'detail.categories')->first();
+                        $order->show_time = $showTime;
+                        $order->movie = $movie;
+                        $detailable->type = 2;
+                    }
+                
+                }
+            }
         }
         
         $response = [

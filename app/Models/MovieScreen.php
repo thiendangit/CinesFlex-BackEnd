@@ -99,8 +99,4 @@ class MovieScreen extends Model
     {
         return $this->belongsTo(Movie::class);
     }
-
-
-
-
 }

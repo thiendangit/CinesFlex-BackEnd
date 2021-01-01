@@ -58,5 +58,12 @@ class Ticket extends Model
         return $this->morphMany(OrderDetail::class, 'order_detailable');
     }
 
+    /**
+     * Get the show time that owns the ticket.
+     */
+    public function movie_screen()
+    {
+        return $this->belongsTo(MovieScreen::class);
+    }
     
 }

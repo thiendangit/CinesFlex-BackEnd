@@ -29,12 +29,22 @@ class MovieScreenController extends Controller
             return response($response);
         }
 
-        $listCinema = [];
-        if(isset($inputs['movie_id'])) {
-             $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->where('show_times.movie_id', $inputs['movie_id'])->get();
-
-        } else {
-            $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+        $listShowTime = [];
+        if (isset($inputs['movie_id'])) {
+            if(sizeof($listCinema) > 0) {
+                foreach($listCinema as $cinema) {
+                    if(isset($cinema->show_times)) {
+                        foreach($cinema->show_times as $showtime) {
+                            if($showtime->movie_id === $inputs['movie_id']) {
+                                array_push($listShowTime, $showtime);
+                            }
+                        }
+                        unset($cinema->show_times);
+                        $cinema->show_times = $listShowTime;
+                    } 
+                }
+            }
         }
 
         $response = [
@@ -101,6 +111,23 @@ class MovieScreenController extends Controller
                                 $listGroupByDay[$key]['show_times'] = [$show_time];
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        $listShowTime = [];
+        if (isset($inputs['movie_id'])) {
+            if(sizeof($listGroupByDay) > 0) {
+                foreach($listGroupByDay as $value) {
+                    if(isset($value['show_times'])) {
+                        foreach($value['show_times'] as $showtime) {
+                            if($showtime->movie_id === $inputs['movie_id']) {
+                                array_push($listShowTime, $showtime);
+                            }
+                        }
+                        unset($value);
+                        $value['show_times'] = [];
                     }
                 }
             }
