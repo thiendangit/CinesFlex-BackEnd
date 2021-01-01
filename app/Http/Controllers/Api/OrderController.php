@@ -27,7 +27,7 @@ class OrderController extends Controller
     {
         $inputs = $request->all();
         $userId = Auth::id();
-        $listOrder = Order::where('booker_id', $userId)->with('details', 'details.order_detailable')->get();
+        $listOrder = Order::where('booker_id', $userId)->with('details', 'details.order_detailable')->orderBy('created_at', 'desc')->get();
         
         if(sizeof($listOrder) > 0) {
             foreach($listOrder as $order) {

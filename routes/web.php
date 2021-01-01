@@ -25,3 +25,7 @@ Route::get('/clear-cache', function() {
 });
 
 // Route::resource('cinemas', CinemaController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
