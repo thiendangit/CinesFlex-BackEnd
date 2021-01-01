@@ -95,10 +95,10 @@ class OrderController extends Controller
 
         $total_paid_discount = 0;
         if(isset($inputs['voucher_id'])) {
-            $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
+            $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->get();
         }
-        if(isset($voucher)) {
-            $total_paid_discount = ($total_ticket + $total_product) * $voucher->value / 100;
+        if(sizeof($voucher) > 0) {
+            $total_paid_discount = ($total_ticket + $total_product) * ($voucher[0]->value ?? 0) / 100;
         }
 
         $order = Order::create([
@@ -150,7 +150,7 @@ class OrderController extends Controller
     private function getProduct(array $inputs) {
         $products = [];
         foreach($inputs as $productInput) {
-            $product = Product::where('id', $productInput['product_id']);
+            $product = Product::find($productInput['product_id']);
             array_push($products, [
                 'id' => $product->id,
                 'quantity' => $productInput['product_quantity'],
@@ -179,7 +179,7 @@ class OrderController extends Controller
     }
 
     private function getTickPrice($showTimeId) {
-        $movieScreen = MovieScreen::where('id', $showTimeId);
+        $movieScreen = MovieScreen::find($showTimeId);
         if(isset($movieScreen)){
             $moviePrice = $movieScreen->movie->detail->price;
             return [

@@ -515,8 +515,13 @@ eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< .merge_file_j54yOl
 __webpack_require__(/*! /Users/DangTibbers/PhpstormProjects/CinesFlex-BackEnd/resources/js/app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! /Users/DangTibbers/PhpstormProjects/CinesFlex-BackEnd/resources/sass/app.scss */"./resources/sass/app.scss");
+=======
+__webpack_require__(/*! /var/www/public_html/cine-flex.com/CinesFlex-BackEnd/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/public_html/cine-flex.com/CinesFlex-BackEnd/resources/sass/app.scss */"./resources/sass/app.scss");
+>>>>>>> .merge_file_LoQSk8
 
 
 /***/ })
