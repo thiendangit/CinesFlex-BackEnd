@@ -75,7 +75,7 @@ class MovieScreenController extends Controller
         }
 
         $listShowTimeGroupByDay = [];
-        $cinema = Cinema::find($inputs['cinema_id'])->with('show_times_in_5_day')->first();
+        $cinema = Cinema::where('id', $inputs['cinema_id'])->with('show_times_in_5_day')->first();
         if(isset($cinema)) {
             // get 5 day from today
             $today = Carbon::now();
