@@ -14,6 +14,8 @@ class Ticket extends Model
 
     public $incrementing = false;
 
+    public $append = [];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -55,4 +57,6 @@ class Ticket extends Model
     {
         return $this->morphMany(OrderDetail::class, 'order_detailable');
     }
+
+    
 }

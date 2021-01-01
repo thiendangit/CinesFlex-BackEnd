@@ -58,4 +58,12 @@ class Promotion extends Model
     {
         return $this->hasMany(Voucher::class)->orderBy('reference');
     }
+
+    /**
+     * Get the promotion's image.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }
