@@ -65,5 +65,13 @@ class Ticket extends Model
     {
         return $this->belongsTo(MovieScreen::class);
     }
+
+    /**
+     * Get the seat that owns the ticket.
+     */
+    public function seat()
+    {
+        return $this->belongsTo(Seat::class);
+    }
     
 }
