@@ -31,7 +31,7 @@ class MovieScreenController extends Controller
 
         $listCinema = [];
         if(isset($inputs['movie_id'])) {
-             $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
+             $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->where('show_times.movie_id', $inputs['movie_id'])->get();
 
         } else {
             $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();

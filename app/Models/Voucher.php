@@ -56,12 +56,4 @@ class Voucher extends Model
     {
         return $this->belongsTo(Promotion::class)->where('status', 1);
     }
-
-     /**
-     * Get the voucher's image.
-     */
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
 }
