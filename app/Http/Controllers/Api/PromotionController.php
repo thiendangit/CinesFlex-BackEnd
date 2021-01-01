@@ -14,7 +14,7 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $data = Promotion::with('vouchers')->get();
+        $data = Promotion::with('vouchers', 'vouchers.images')->get();
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',

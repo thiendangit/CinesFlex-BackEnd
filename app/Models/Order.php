@@ -54,10 +54,8 @@ class Order extends Model
         'status' => 'integer'
     ];
 
-
     public function details()
     {
         return $this->hasMany(OrderDetail::class);
     }
-
 }

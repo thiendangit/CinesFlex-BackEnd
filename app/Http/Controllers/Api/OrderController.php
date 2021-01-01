@@ -25,19 +25,19 @@ class OrderController extends Controller
     public function fetchHistory(Request $request)
     {
         $inputs = $request->all();
-        $userId = Auth::user()->id;
+        $userId = Auth::id();
         // $user = User::whereId($user_id)->with('orders', 'orders.details')->get();
 
         $data = [];
-        $listOrder = Order::where('booker_id', $userId)->get();
+        $listOrder = Order::where('booker_id', $userId)->with('details', 'details.order_detailable')->get();
         if(sizeof($listOrder) > 0) {
-            $listOrderId = array_column($listOrder, 'id');
-            $item = OrderDetail::whereIn('order_id', $listOrderId)->get();
+            // $listOrderId = array_column($listOrder, 'id');
+            // $item = OrderDetail::whereIn('order_id', $listOrderId)->get();
 
         }
         
         $response = [
-            'data' => $data,
+            'data' => $listOrder,
             'message' => 'Get list successfully',
             'success' => true
         ];
@@ -104,8 +104,8 @@ class OrderController extends Controller
                     'order_id' => $orderId,
                     'order_detailable_id' => $ticket->id,
                     'order_detailable_type' => Ticket::class,
-                    'quantity' => sizeof($tickets),
-                    'total' => $total_ticket
+                    'quantity' => 1,
+                    'total' => $ticket->price
                 ]);
                 $order->details()->save($orderDetails);
             }
