@@ -97,37 +97,28 @@ class MovieScreenController extends Controller
                         $listGroupByDay[$key]['day_of_week'] = $dayOfWeeks[$day['day_of_week']];
                         $listGroupByDay[$key]['day'] =$day['day'];
                         if($day['day'] == $show_time->day) {
-                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0) {
-                                array_push($listGroupByDay[$key]['show_times'], $show_time);
+                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
+                                if ($show_time->movie_id === $inputs['movie_id']) {
+                                    array_push($listGroupByDay[$key]['show_times'], $show_time);
+                                }
                             } else {
-                                $listGroupByDay[$key]['show_times'] = [$show_time];
+                                if ($show_time->movie_id === $inputs['movie_id']) {
+                                    $listGroupByDay[$key]['show_times'] = [$show_time];
+                                }
                             }
                         }
                     } else {
                         if($day['day'] == $show_time->day) {
-                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0) {
-                                array_push($listGroupByDay[$key]['show_times'], $show_time);
+                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
+                                if ($show_time->movie_id === $inputs['movie_id']) {
+                                    array_push($listGroupByDay[$key]['show_times'], $show_time);
+                                }
                             } else {
-                                $listGroupByDay[$key]['show_times'] = [$show_time];
+                                if ($show_time->movie_id === $inputs['movie_id']) {
+                                    $listGroupByDay[$key]['show_times'] = [$show_time];
+                                }
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        $listShowTime = [];
-        if (isset($inputs['movie_id'])) {
-            if(sizeof($listGroupByDay) > 0) {
-                foreach($listGroupByDay as $value) {
-                    if(isset($value['show_times'])) {
-                        foreach($value['show_times'] as $showtime) {
-                            if($showtime->movie_id === $inputs['movie_id']) {
-                                array_push($listShowTime, $showtime);
-                            }
-                        }
-                        unset($value);
-                        $value['show_times'] = [];
                     }
                 }
             }
