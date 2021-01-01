@@ -144,7 +144,6 @@ class MovieScreenController extends Controller
                         'date' => $show_time->date,
                     ];
 
-
                     foreach($list5Day as $key=>$day) {
                         if(!isset($listGroupByDay[$key])){
                             if($day['day'] == $show_time->day) {
@@ -175,11 +174,7 @@ class MovieScreenController extends Controller
                     $showTime = [];
                 } 
             }
-
-            
         }
-
-        // $date->format('H:t')
 
         $response = [
             'data' => $listGroupByDay,
