@@ -174,11 +174,7 @@ class MovieScreenController extends Controller
                     $showTime = [];
                 } 
             }
-
-            
         }
-
-        // $date->format('H:t')
 
         $response = [
             'data' => $listGroupByDay,

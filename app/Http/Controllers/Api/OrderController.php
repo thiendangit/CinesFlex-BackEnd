@@ -88,17 +88,17 @@ class OrderController extends Controller
         $inputs['booker_id'] = Auth::id();
         $ticketPrice = $getTickPrice['price'];
         $tickets = $this->addTicket($inputs, $ticketPrice);
-        $products = $this->getProduct($inputs['products']);
+        $products = $this->getProduct($inputs['products'] ?? []);
 
         $total_ticket = array_sum(array_column($tickets, 'price')) ?? 0;
         $total_product = array_sum(array_column($products, 'total')) ?? 0;
 
         $total_paid_discount = 0;
         if(isset($inputs['voucher_id'])) {
-            $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->get();
+            $voucher = Voucher::where('id', $inputs['voucher_id'])->where('status', 1)->first();
         }
-        if(sizeof($voucher) > 0) {
-            $total_paid_discount = ($total_ticket + $total_product) * ($voucher[0]->value ?? 0) / 100;
+        if(isset($voucher)) {
+            $total_paid_discount = ($total_ticket + $total_product) * ($voucher->value ?? 0) / 100;
         }
 
         $order = Order::create([
@@ -147,18 +147,20 @@ class OrderController extends Controller
         return response($response);
     }
 
-    private function getProduct(array $inputs) {
+    private function getProduct(array $product) {
         $products = [];
-        foreach($inputs as $productInput) {
-            $product = Product::find($productInput['product_id']);
-            array_push($products, [
-                'id' => $product->id,
-                'quantity' => $productInput['product_quantity'],
-                'price' => $product->price,
-                'total' => $productInput['product_quantity'] * $product->price 
-            ]);
+        if(sizeof($product) > 0) {
+            foreach($product as $productInput) {
+                $product = Product::find($productInput['product_id']);
+                array_push($products, [
+                    'id' => $product->id,
+                    'quantity' => $productInput['product_quantity'],
+                    'price' => $product->price,
+                    'total' => $productInput['product_quantity'] * $product->price 
+                ]);
+            }
         }
-
+       
         return $products;
     }
 
