@@ -39,7 +39,7 @@ class PromotionsTableSeeder extends Seeder
 
             $image = new Image();
             $image->url = $listUrl[0];
-            $model->images()->save($image);
+            $modelVoucher->images()->save($image);
         }
     }
 }
