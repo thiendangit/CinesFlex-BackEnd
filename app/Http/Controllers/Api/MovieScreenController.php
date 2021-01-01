@@ -42,6 +42,7 @@ class MovieScreenController extends Controller
                         }
                         unset($cinema->show_times);
                         $cinema->show_times = $listShowTime;
+                        $listShowTime = [];
                     } 
                 }
             }
