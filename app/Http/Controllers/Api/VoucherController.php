@@ -30,13 +30,19 @@ class VoucherController extends Controller
                     'success' => false
                 ];
             }
+            $response = [
+                'data' => $voucher,
+                'message' => 'Apply voucher successfully',
+                'success' => true
+            ];
+        } else {
+            $response = [
+                'message' => 'Voucher is not valid',
+                'success' => false
+            ];
         }
 
-        $response = [
-            'data' => $voucher,
-            'message' => 'Apply voucher successfully',
-            'success' => true
-        ];
+        
         return response($response);
 
     }
