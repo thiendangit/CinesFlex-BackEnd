@@ -37,9 +37,10 @@ class OrderController extends Controller
                         $detailable->order_detailable->images = $product->images;
                         $detailable->type = 1;
                     } else if($detailable->order_detailable_type == 'App\Models\Ticket'){
-                        $ticket = Ticket::find($detailable->order_detailable_id)->first();
+                        $ticket = Ticket::find($detailable->order_detailable_id)->with('seat')->first();
                         $showTime = MovieScreen::find($ticket->movie_screen_id)->first();
                         $movie = Movie::find($showTime->movie_id)->with('detail.images', 'detail.categories')->first();
+                        $detailable->seat =$ticket->seat->name;
                         $order->show_time = $showTime;
                         $order->movie = $movie;
                         $detailable->type = 2;
