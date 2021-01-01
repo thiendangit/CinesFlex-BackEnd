@@ -78,18 +78,17 @@ class MovieScreen extends Model
         return $date->toFormattedDateString();
     }
 
-    /**
-     * Get the show time.
+     /**
+     * Set the show time value
      *
      * @param  string  $value
-     * @return string
+     * @return void
      */
-    public function getShowTimeAttribute($show_time)
+    public function setShowTimeAttribute($value)
     {
-        $date = new Carbon($show_time);
-        return $date->format('H:t');
+        $this->attributes['show_time'] = $value;
     }
-
+    
      /**
      * Get the screen that owns the movie screen.
      */

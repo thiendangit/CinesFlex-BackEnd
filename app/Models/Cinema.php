@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use GoldSpecDigital\LaravelEloquentUUID\Database\Eloquent\Uuid;
-use Carbon\Carbon;
 
 class Cinema extends Model
 {
@@ -58,18 +57,7 @@ class Cinema extends Model
 
     public function show_times()
     {
-        $today = Carbon::yesterday();
-        $tomorrow = Carbon::tomorrow();
-
-        return $this->hasMany(MovieScreen::class)->whereBetween('show_time',[$today, $tomorrow])->orderBy('show_time');
-    }
-
-    public function show_times_in_5_day()
-    {
-        $today = Carbon::yesterday();
-        $next5Day = Carbon::now()->addDays(4);
-
-        return $this->hasMany(MovieScreen::class)->whereBetween('show_time',[$today, $next5Day])->with('movie')->orderBy('show_time');
+        return $this->hasMany(MovieScreen::class);
     }
 
     /**

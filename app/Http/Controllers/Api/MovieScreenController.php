@@ -29,27 +29,52 @@ class MovieScreenController extends Controller
             return response($response);
         }
 
-        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with('show_times')->get();
-        $listShowTime = [];
-        if (isset($inputs['movie_id'])) {
-            if(sizeof($listCinema) > 0) {
-                foreach($listCinema as $cinema) {
-                    if(isset($cinema->show_times)) {
-                        foreach($cinema->show_times as $showtime) {
-                            if($showtime->movie_id === $inputs['movie_id']) {
-                                array_push($listShowTime, $showtime);
-                            }
-                        }
-                        unset($cinema->show_times);
-                        $cinema->show_times = $listShowTime;
-                        $listShowTime = [];
-                    } 
+        $movie_id = $inputs['movie_id'] ?? '';
+        $today = Carbon::today();
+        $tomorrow = Carbon::tomorrow();
+
+        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with(['show_times' => function($query) use ($movie_id, $today, $tomorrow) {
+            if($movie_id !== '') {
+                $query->where('movie_id', $movie_id);
+            }
+            $query->whereBetween('show_time',[$today, $tomorrow]);
+        }])->get();
+
+        $data = [];
+        if(sizeof($listCinema)) {
+            foreach($listCinema as $cinema) {
+                $showTime = [];
+                if($cinema->show_times) {
+                    foreach($cinema->show_times as $show_time) {
+                        array_push($showTime, [
+                            'id' => $show_time->id,
+                            'movie_id' => $show_time->movie_id,
+                            'screen_id' => $show_time->screen_id,
+                            'cinema_id' => $show_time->cinema_id,
+                            'show_time' => $show_time->show_time->format('H:t'),
+                            'type' => $show_time->type,
+                            'status' => $show_time->status,
+                            'day' => $show_time->day,
+                            'day_of_week' => $show_time->day_of_week,
+                            'price' => $show_time->price,
+                            'date' => $show_time->date,
+                        ]);
+                    }
                 }
+                array_push($data, [
+                    'id' => $cinema->id,
+                    'region_id' => $cinema->region_id,
+                    'name' => $cinema->name,
+                    'description' => $cinema->description,
+                    'type' => $cinema->type,
+                    'status' => $cinema->status,
+                    'show_times' => $showTime
+                ]);
             }
         }
 
         $response = [
-            'data' => $listCinema,
+            'data' => $data,
             'message' => 'Get list successfully',
             'success' => true
         ];
@@ -75,55 +100,86 @@ class MovieScreenController extends Controller
             return response($response);
         }
 
-        $listShowTimeGroupByDay = [];
-        $cinema = Cinema::where('id', $inputs['cinema_id'])->with('show_times_in_5_day')->first();
-        if(isset($cinema)) {
-            // get 5 day from today
-            $today = Carbon::now();
-            $next5Day = Carbon::now()->addDays(5);
-            $dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            $list5Day = [];
-            while ($today->diffInDays($next5Day)){
-                array_push($list5Day, [
-                    'day' => $today->day,
-                    'day_of_week' => $today->dayOfWeek
-                ]);
-                $today->addDay();
-            }
+        // get 5 day from today
+        $today = Carbon::today();
+        $next5Day = Carbon::today()->addDays(5);
 
-            // group by day
-            foreach($cinema->show_times_in_5_day as $show_time) {
-                foreach($list5Day as $key=>$day) {
-                    if(!isset($listShowTimeGroupByDay[$key])){
-                        $listGroupByDay[$key]['day_of_week'] = $dayOfWeeks[$day['day_of_week']];
-                        $listGroupByDay[$key]['day'] =$day['day'];
-                        if($day['day'] == $show_time->day) {
-                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
-                                if ($show_time->movie_id === $inputs['movie_id']) {
-                                    array_push($listGroupByDay[$key]['show_times'], $show_time);
-                                }
-                            } else {
-                                if ($show_time->movie_id === $inputs['movie_id']) {
-                                    $listGroupByDay[$key]['show_times'] = [$show_time];
+        $listGroupByDay = [];
+        $movie_id = $inputs['movie_id'];
+        $cinemas = Cinema::where('id', $inputs['cinema_id'])->with(['show_times' => function($query) use ($movie_id, $today, $next5Day) {
+            $query->where('movie_id', $movie_id);
+            $query->whereBetween('show_time',[$today, $next5Day]);
+        }])->get();
+
+        $dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        $list5Day = [];
+        while ($today->diffInDays($next5Day)){
+            array_push($list5Day, [
+                'day' => $today->day,
+                'day_of_week' => $today->dayOfWeek
+            ]);
+            $today->addDay();
+        }
+
+        foreach($list5Day as $key=>$day) {
+            $listGroupByDay[$key]['day_of_week'] = $dayOfWeeks[$day['day_of_week']];
+            $listGroupByDay[$key]['day'] =$day['day'];
+        }
+
+        if(sizeof($cinemas) > 0) {
+            foreach($cinemas as $cinema) {
+               // group by day
+                foreach($cinema->show_times as $show_time) {
+                    $showTime = [
+                        'id' => $show_time->id,
+                        'movie_id' => $show_time->movie_id,
+                        'screen_id' => $show_time->screen_id,
+                        'cinema_id' => $show_time->cinema_id,
+                        'show_time' => $show_time->show_time->format('H:t'),
+                        'type' => $show_time->type,
+                        'status' => $show_time->status,
+                        'day' => $show_time->day,
+                        'day_of_week' => $show_time->day_of_week,
+                        'price' => $show_time->price,
+                        'date' => $show_time->date,
+                    ];
+
+
+                    foreach($list5Day as $key=>$day) {
+                        if(!isset($listGroupByDay[$key])){
+                            if($day['day'] == $show_time->day) {
+                                if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
+                                    if ($show_time->movie_id === $inputs['movie_id']) {
+                                        array_push($listGroupByDay[$key]['show_times'], $showTime);
+                                    }
+                                } else {
+                                    if ($show_time->movie_id === $inputs['movie_id']) {
+                                        $listGroupByDay[$key]['show_times'] = [$showTime];
+                                    }
                                 }
                             }
-                        }
-                    } else {
-                        if($day['day'] == $show_time->day) {
-                            if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
-                                if ($show_time->movie_id === $inputs['movie_id']) {
-                                    array_push($listGroupByDay[$key]['show_times'], $show_time);
-                                }
-                            } else {
-                                if ($show_time->movie_id === $inputs['movie_id']) {
-                                    $listGroupByDay[$key]['show_times'] = [$show_time];
+                        } else {
+                            if($day['day'] == $show_time->day) {
+                                if(isset($listGroupByDay[$key]['show_times']) && sizeof($listGroupByDay[$key]['show_times']) > 0 && $inputs['movie_id']) {
+                                    if ($show_time->movie_id === $inputs['movie_id']) {
+                                        array_push($listGroupByDay[$key]['show_times'], $showTime);
+                                    }
+                                } else {
+                                    if ($show_time->movie_id === $inputs['movie_id']) {
+                                        $listGroupByDay[$key]['show_times'] = [$showTime];
+                                    }
                                 }
                             }
                         }
                     }
-                }
+                    $showTime = [];
+                } 
             }
+
+            
         }
+
+        // $date->format('H:t')
 
         $response = [
             'data' => $listGroupByDay,
