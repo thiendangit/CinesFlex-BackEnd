@@ -14,7 +14,8 @@ class CasterController extends Controller
      */
     public function index()
     {
-        //
+        $model = Caster::with('images')->orderBy('name', 'asc')->paginate(5);
+        return view('casters.index', ['collection' => $model]);
     }
 
     /**
@@ -24,7 +25,7 @@ class CasterController extends Controller
      */
     public function create()
     {
-        //
+        return view('casters.create');
     }
 
     /**
@@ -35,7 +36,19 @@ class CasterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['name', 'description']);
+        $inputs['type'] = 1;
+        $inputs['status'] = 1;
+        $caster = Caster::firstOrCreate($inputs);
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/casters', 'public');
+            if(isset($path)) {
+                $caster->images()->create(['url' => '/storage/'. $path]);
+            }
+        }
+
+        return redirect('casters')->with('message', trans('message.casters.create_success'));
     }
 
     /**
@@ -57,7 +70,7 @@ class CasterController extends Controller
      */
     public function edit(Caster $caster)
     {
-        //
+        return view('casters.edit', ['model' => $caster]);
     }
 
     /**
@@ -69,7 +82,21 @@ class CasterController extends Controller
      */
     public function update(Request $request, Caster $caster)
     {
-        //
+        $inputs = $request->only(['name', 'description']);
+
+        $caster->update($inputs);
+        $caster->save();
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/casters', 'public');
+            if(isset($path)) {
+                $caster->images()->update(['url' => '/storage/'. $path]);
+            }
+        }
+    
+        $caster->refresh();
+
+        return redirect('casters')->with('message', trans('message.casters.update_success'));
     }
 
     /**
@@ -80,6 +107,9 @@ class CasterController extends Controller
      */
     public function destroy(Caster $caster)
     {
-        //
+        $caster->images()->delete();
+        $caster->movie_details()->detach();
+        $caster->delete();
+        return redirect('casters')->with('message', trans('message.casters.delete_success'));
     }
 }

@@ -48,9 +48,9 @@ class Caster extends Model
         'status' => 'integer'
     ];
 
-    public function movies()
+    public function movie_details()
     {
-        return $this->belongsToMany(Movies::class);
+        return $this->belongsToMany(MovieDetail::class);
     }
 
      /**

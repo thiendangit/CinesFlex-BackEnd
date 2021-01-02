@@ -1,5 +1,11 @@
 <?php
 return [
+    'sidebar' => [
+        'region' => 'Region',
+        'cinema' => 'Cinema',
+        'caster' => 'Caster'
+    ],
+
     'home' => [
         'title' => 'Hello there',
         'home' => 'Home',
@@ -34,6 +40,23 @@ return [
         'breadcrumb_update' => 'Update',
         'create' => 'Create Cinema',
         'update' => 'Update Cinema',
+        'name' => 'Name',
+        'region' => 'Region',
+        'photo' => 'Photo',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
+
+    'casters' => [
+        'title' => 'casters',
+        'casters' => 'Casters',
+        'breadcrumb' => 'Caster',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create caster',
+        'update' => 'Update Caster',
         'name' => 'Name',
         'region' => 'Region',
         'photo' => 'Photo',

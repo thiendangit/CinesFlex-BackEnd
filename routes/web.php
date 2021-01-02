@@ -45,3 +45,6 @@ Route::get('/regions/delete/{region}', 'RegionController@destroy')->name('region
 
 Route::resource('cinemas', 'CinemaController');
 Route::get('/cinemas/delete/{cinema}', 'CinemaController@destroy')->name('cinemas.destroy');
+
+Route::resource('casters', 'CasterController');
+Route::get('/casters/delete/{caster}', 'CasterController@destroy')->name('casters.destroy');
