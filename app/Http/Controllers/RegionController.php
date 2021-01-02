@@ -14,9 +14,9 @@ class RegionController extends Controller
      */
     public function index()
     {
-        $regions = Region::orderBy('name', 'asc')->paginate(5);
+        $model = Region::orderBy('name', 'asc')->paginate(5);
 
-        return view('regions.index', ['collection' => $regions]);
+        return view('regions.index', ['collection' => $model]);
     }
 
     /**
@@ -95,6 +95,5 @@ class RegionController extends Controller
     {
         $region->delete();
         return redirect('regions')->with('message', trans('message.regions.delete_success'));
-
     }
 }

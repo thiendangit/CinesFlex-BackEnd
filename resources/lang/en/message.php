@@ -25,4 +25,21 @@ return [
         'update_success' => 'Update successfully',
         'delete_success' => 'Delete successfully',
     ],
+
+    'cinemas' => [
+        'title' => 'cinemas',
+        'cinemas' => 'Cinemas',
+        'breadcrumb' => 'Cinema',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Cinema',
+        'update' => 'Update Cinema',
+        'name' => 'Name',
+        'region' => 'Region',
+        'photo' => 'Photo',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
 ];

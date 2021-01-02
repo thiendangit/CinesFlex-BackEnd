@@ -36,11 +36,12 @@ Route::get('/admin', function() {
 
 Route::resources([
     'movies'        => MovieController::class,
-    'cinemas'       => CinemaController::class,
     'products'      => ProductController::class,
     'promotions'    => PromotionController::class,
 ]);
 
 Route::resource('regions', 'RegionController');
-
 Route::get('/regions/delete/{region}', 'RegionController@destroy')->name('regions.destroy');
+
+Route::resource('cinemas', 'CinemaController');
+Route::get('/cinemas/delete/{cinema}', 'CinemaController@destroy')->name('cinemas.destroy');
