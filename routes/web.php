@@ -51,3 +51,6 @@ Route::get('/casters/delete/{caster}', 'CasterController@destroy')->name('caster
 
 Route::resource('languages', 'LanguageController');
 Route::get('/languages/delete/{language}', 'LanguageController@destroy')->name('languages.destroy');
+
+Route::resource('categories', 'CategoryController');
+Route::get('/categories/delete/{category}', 'CategoryController@destroy')->name('categories.destroy');

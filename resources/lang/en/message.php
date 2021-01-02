@@ -4,7 +4,8 @@ return [
         'region' => 'Region',
         'cinema' => 'Cinema',
         'caster' => 'Caster',
-        'language' => 'Language'
+        'language' => 'Language',
+        'category' => 'Category',
     ],
 
     'home' => [
@@ -74,6 +75,21 @@ return [
         'breadcrumb_update' => 'Update',
         'create' => 'Create language',
         'update' => 'Update language',
+        'title_name' => 'Title',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
+
+    'categories' => [
+        'title' => 'categories',
+        'categories' => 'Categories',
+        'breadcrumb' => 'Category',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create category',
+        'update' => 'Update category',
         'title_name' => 'Title',
         'description' => 'Description',
         'create_success' => 'Create successfully',
