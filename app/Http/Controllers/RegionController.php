@@ -14,7 +14,9 @@ class RegionController extends Controller
      */
     public function index()
     {
-        //
+        $regions = Region::orderBy('name', 'asc')->paginate(5);
+
+        return view('regions.index', ['collection' => $regions]);
     }
 
     /**
@@ -24,7 +26,7 @@ class RegionController extends Controller
      */
     public function create()
     {
-        //
+        return view('regions.create');
     }
 
     /**
@@ -35,7 +37,12 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['name', 'description']);
+        $inputs['type'] = 1;
+        $inputs['status'] = 1;
+        $region = Region::firstOrCreate($inputs);
+
+        return redirect('regions')->with('message', trans('message.regions.create_success'));
     }
 
     /**
@@ -57,7 +64,7 @@ class RegionController extends Controller
      */
     public function edit(Region $region)
     {
-        //
+        return view('regions.edit', ['model' => $region]);
     }
 
     /**
@@ -69,7 +76,13 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        //
+        $inputs = $request->only(['name', 'description']);
+
+        $region->update($inputs);
+        $region->save();
+        $region->refresh();
+
+        return redirect('regions')->with('message', trans('message.regions.update_success'));
     }
 
     /**
@@ -80,6 +93,8 @@ class RegionController extends Controller
      */
     public function destroy(Region $region)
     {
-        //
+        $region->delete();
+        return redirect('regions')->with('message', trans('message.regions.delete_success'));
+
     }
 }
