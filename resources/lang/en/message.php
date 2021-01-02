@@ -3,7 +3,8 @@ return [
     'sidebar' => [
         'region' => 'Region',
         'cinema' => 'Cinema',
-        'caster' => 'Caster'
+        'caster' => 'Caster',
+        'language' => 'Language'
     ],
 
     'home' => [
@@ -58,8 +59,22 @@ return [
         'create' => 'Create caster',
         'update' => 'Update Caster',
         'name' => 'Name',
-        'region' => 'Region',
         'photo' => 'Photo',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
+
+    'languages' => [
+        'title' => 'casters',
+        'languages' => 'Languages',
+        'breadcrumb' => 'Language',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create language',
+        'update' => 'Update language',
+        'title_name' => 'Title',
         'description' => 'Description',
         'create_success' => 'Create successfully',
         'update_success' => 'Update successfully',

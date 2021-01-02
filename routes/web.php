@@ -48,3 +48,6 @@ Route::get('/cinemas/delete/{cinema}', 'CinemaController@destroy')->name('cinema
 
 Route::resource('casters', 'CasterController');
 Route::get('/casters/delete/{caster}', 'CasterController@destroy')->name('casters.destroy');
+
+Route::resource('languages', 'LanguageController');
+Route::get('/languages/delete/{language}', 'LanguageController@destroy')->name('languages.destroy');
