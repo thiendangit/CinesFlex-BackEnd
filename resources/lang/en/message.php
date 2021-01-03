@@ -7,6 +7,8 @@ return [
         'language' => 'Language',
         'category' => 'Category',
         'screen' => 'Screen',
+        'promotion' => 'Promotion',
+        'product' => 'Product',
     ],
 
     'home' => [
@@ -58,7 +60,7 @@ return [
         'breadcrumb' => 'Caster',
         'breadcrumb_create' => 'Create',
         'breadcrumb_update' => 'Update',
-        'create' => 'Create caster',
+        'create' => 'Create Caster',
         'update' => 'Update Caster',
         'name' => 'Name',
         'photo' => 'Photo',
@@ -113,4 +115,23 @@ return [
         'update_success' => 'Update successfully',
         'delete_success' => 'Delete successfully',
     ],
+
+    'products' => [
+        'title' => 'Product Page',
+        'products' => 'Products',
+        'breadcrumb' => 'Product',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Product',
+        'update' => 'Update Product',
+        'name' => 'Name',
+        'photo' => 'Photo',
+        'reference' => 'Reference',
+        'price' => 'Price',
+        'type' => 'Type',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ], 
 ];

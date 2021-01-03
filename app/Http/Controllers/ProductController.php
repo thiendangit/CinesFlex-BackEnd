@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $model = Product::with('images')->orderBy('name', 'asc')->paginate(5);
+        return view('products.index', ['collection' => $model]);
     }
 
     /**
@@ -24,7 +26,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $listType = [
+            ['id' => 1, 'name'=> 'Food'], 
+            ['id' => 2, 'name'=> 'Beverage']
+        ];
+        return view('products.create', ['collection' => $listType]);
     }
 
     /**
@@ -35,7 +41,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['name', 'description', 'price', 'type']);
+        $inputs['status'] = 1;
+        $inputs['reference'] = 'PRO' . Str::random(6);
+
+        $product = Product::firstOrCreate($inputs);
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/products', 'public');
+            if(isset($path)) {
+                $product->images()->create(['url' => '/storage/'. $path]);
+            }
+        }
+
+        return redirect('products')->with('message', trans('message.products.create_success'));
     }
 
     /**
@@ -52,12 +71,17 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  \App\Models\Product  $produc t
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product)
     {
-        //
+        $listType = [
+            ['id' => 1, 'name'=> 'Food'], 
+            ['id' => 2, 'name'=> 'Beverage']
+        ];
+
+        return view('products.edit', ['model' => $product, 'collection' => $listType]);
     }
 
     /**
@@ -69,7 +93,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $inputs = $request->only(['name', 'description', 'price', 'type']);
+
+        $product->update($inputs);
+        $product->save();
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/products', 'public');
+            if(isset($path)) {
+                $product->images()->update(['url' => '/storage/'. $path]);
+            }
+        }
+    
+        $product->refresh();
+
+        return redirect('products')->with('message', trans('message.products.update_success'));
     }
 
     /**
@@ -80,6 +118,8 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->images()->delete();
+        $product->delete();
+        return redirect('products')->with('message', trans('message.products.delete_success'));
     }
 }

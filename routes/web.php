@@ -37,7 +37,6 @@ Route::get('/admin', function() {
 Route::resources([
     'movies'        => MovieController::class,
     'products'      => ProductController::class,
-    'promotions'    => PromotionController::class,
 ]);
 
 Route::resource('regions', 'RegionController');
@@ -57,3 +56,9 @@ Route::get('/categories/delete/{category}', 'CategoryController@destroy')->name(
 
 Route::resource('screens', 'ScreenController');
 Route::get('/screens/delete/{screen}', 'ScreenController@destroy')->name('screens.destroy');
+
+Route::resource('promotions', 'PromotionController');
+Route::get('/promotions/delete/{promotion}', 'PromotionController@destroy')->name('promotions.destroy');
+
+Route::resource('products', 'ProductController');
+Route::get('/products/delete/{product}', 'ProductController@destroy')->name('products.destroy');
