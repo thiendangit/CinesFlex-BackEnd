@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Screen;
+use App\Models\Cinema;
+use App\Models\SeatRow;
+use App\Models\Seat;
+
 use Illuminate\Http\Request;
 
 class ScreenController extends Controller
@@ -14,7 +18,8 @@ class ScreenController extends Controller
      */
     public function index()
     {
-        //
+        $model = Screen::with('cinema')->orderBy('name', 'asc')->paginate(5);
+        return view('screens.index', ['collection' => $model]);
     }
 
     /**
@@ -24,7 +29,8 @@ class ScreenController extends Controller
      */
     public function create()
     {
-        //
+        $cinema = Cinema::all();
+        return view('screens.create', ['collection' => $cinema]);
     }
 
     /**
@@ -35,7 +41,24 @@ class ScreenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['name', 'description', 'cinema_id']);
+        $inputs['type'] = 1;
+        $inputs['status'] = 1;
+        $screen = Screen::firstOrCreate($inputs);
+        $listSeatRow  = SeatRow::all();
+        foreach($listSeatRow as $seatRow) {
+            for($i = 0; $i <= 5; $i++) {
+                $model = new Seat();
+                $model->seat_row_id = $seatRow->id;
+                $model->screen_id = $screen->id;
+                $model->name = $seatRow->reference . ($i + 1);
+                $model->type = Seat::IS_AVAILABLE;
+                $model->status = 1;
+                $model->save();
+            }
+        }
+
+        return redirect('screens')->with('message', trans('message.screens.create_success'));
     }
 
     /**
@@ -57,7 +80,7 @@ class ScreenController extends Controller
      */
     public function edit(Screen $screen)
     {
-        //
+        return view('screens.edit', ['model' => $screen]);
     }
 
     /**
@@ -69,7 +92,13 @@ class ScreenController extends Controller
      */
     public function update(Request $request, Screen $screen)
     {
-        //
+        $inputs = $request->only(['name', 'description']);
+
+        $screen->update($inputs);
+        $screen->save();
+        $screen->refresh();
+
+        return redirect('screens')->with('message', trans('message.screens.update_success'));
     }
 
     /**
@@ -80,6 +109,8 @@ class ScreenController extends Controller
      */
     public function destroy(Screen $screen)
     {
-        //
+        $screen->seats()->detach();
+        $screen->delete();
+        return redirect('screens')->with('message', trans('message.screens.delete_success'));
     }
 }

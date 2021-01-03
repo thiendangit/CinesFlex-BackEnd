@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/clear-cache', function() {
@@ -31,7 +31,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/admin', function() {
-    return view('admin.index');
+    return view('home');
 });
 
 Route::resources([
@@ -54,3 +54,6 @@ Route::get('/languages/delete/{language}', 'LanguageController@destroy')->name('
 
 Route::resource('categories', 'CategoryController');
 Route::get('/categories/delete/{category}', 'CategoryController@destroy')->name('categories.destroy');
+
+Route::resource('screens', 'ScreenController');
+Route::get('/screens/delete/{screen}', 'ScreenController@destroy')->name('screens.destroy');

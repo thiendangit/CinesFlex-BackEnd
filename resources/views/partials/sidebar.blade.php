@@ -1,6 +1,6 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{{ url('/') }}" class="brand-link">
       <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="Cines FLex Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Cines Flex</span>
@@ -69,6 +69,14 @@
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   {{ trans('message.sidebar.category') }}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('screens.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  {{ trans('message.sidebar.screen') }}
                 </p>
               </a>
             </li>

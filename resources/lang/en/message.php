@@ -6,6 +6,7 @@ return [
         'caster' => 'Caster',
         'language' => 'Language',
         'category' => 'Category',
+        'screen' => 'Screen',
     ],
 
     'home' => [
@@ -20,7 +21,7 @@ return [
     ],
 
     'regions' => [
-        'title' => 'Regions',
+        'title' => 'Region page',
         'regions' => 'Regions',
         'breadcrumb' => 'Region',
         'breadcrumb_create' => 'Create',
@@ -35,7 +36,7 @@ return [
     ],
 
     'cinemas' => [
-        'title' => 'cinemas',
+        'title' => 'Cinema Page',
         'cinemas' => 'Cinemas',
         'breadcrumb' => 'Cinema',
         'breadcrumb_create' => 'Create',
@@ -52,7 +53,7 @@ return [
     ],
 
     'casters' => [
-        'title' => 'casters',
+        'title' => 'Caster Page',
         'casters' => 'Casters',
         'breadcrumb' => 'Caster',
         'breadcrumb_create' => 'Create',
@@ -68,7 +69,7 @@ return [
     ],
 
     'languages' => [
-        'title' => 'casters',
+        'title' => 'Language Page',
         'languages' => 'Languages',
         'breadcrumb' => 'Language',
         'breadcrumb_create' => 'Create',
@@ -83,7 +84,7 @@ return [
     ],
 
     'categories' => [
-        'title' => 'categories',
+        'title' => 'Category Page',
         'categories' => 'Categories',
         'breadcrumb' => 'Category',
         'breadcrumb_create' => 'Create',
@@ -91,6 +92,22 @@ return [
         'create' => 'Create category',
         'update' => 'Update category',
         'title_name' => 'Title',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
+
+    'screens' => [
+        'title' => 'Screen Page',
+        'screens' => 'Screens',
+        'breadcrumb' => 'Screen',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Screen',
+        'update' => 'Update Screen',
+        'name' => 'Name',
+        'cinema' => 'Cinema',
         'description' => 'Description',
         'create_success' => 'Create successfully',
         'update_success' => 'Update successfully',
