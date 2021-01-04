@@ -14,7 +14,8 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        //
+        $model = Language::orderBy('title', 'asc')->paginate(5);
+        return view('languages.index', ['collection' => $model]);
     }
 
     /**
@@ -24,7 +25,7 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        //
+        return view('languages.create');
     }
 
     /**
@@ -35,7 +36,12 @@ class LanguageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['title', 'description']);
+        $inputs['type'] = 1;
+        $inputs['status'] = 1;
+        $language = Language::firstOrCreate($inputs);
+
+        return redirect('languages')->with('message', trans('message.languages.create_success'));
     }
 
     /**
@@ -57,7 +63,7 @@ class LanguageController extends Controller
      */
     public function edit(Language $language)
     {
-        //
+        return view('languages.edit', ['model' => $language]);
     }
 
     /**
@@ -69,7 +75,11 @@ class LanguageController extends Controller
      */
     public function update(Request $request, Language $language)
     {
-        //
+        $inputs = $request->only(['title', 'description']);
+        $language->update($inputs);
+        $language->save();
+        $language->refresh();
+        return redirect('languages')->with('message', trans('message.languages.update_success'));
     }
 
     /**
@@ -80,6 +90,8 @@ class LanguageController extends Controller
      */
     public function destroy(Language $language)
     {
-        //
+        $language->movie_details()->detach();
+        $language->delete();
+        return redirect('languages')->with('message', trans('message.languages.delete_success'));
     }
 }

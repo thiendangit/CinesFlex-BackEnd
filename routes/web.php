@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/clear-cache', function() {
@@ -31,5 +31,34 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/admin', function() {
-    return view('admin.index');
+    return view('home');
 });
+
+Route::resources([
+    'movies'        => MovieController::class,
+    'products'      => ProductController::class,
+]);
+
+Route::resource('regions', 'RegionController');
+Route::get('/regions/delete/{region}', 'RegionController@destroy')->name('regions.destroy');
+
+Route::resource('cinemas', 'CinemaController');
+Route::get('/cinemas/delete/{cinema}', 'CinemaController@destroy')->name('cinemas.destroy');
+
+Route::resource('casters', 'CasterController');
+Route::get('/casters/delete/{caster}', 'CasterController@destroy')->name('casters.destroy');
+
+Route::resource('languages', 'LanguageController');
+Route::get('/languages/delete/{language}', 'LanguageController@destroy')->name('languages.destroy');
+
+Route::resource('categories', 'CategoryController');
+Route::get('/categories/delete/{category}', 'CategoryController@destroy')->name('categories.destroy');
+
+Route::resource('screens', 'ScreenController');
+Route::get('/screens/delete/{screen}', 'ScreenController@destroy')->name('screens.destroy');
+
+Route::resource('promotions', 'PromotionController');
+Route::get('/promotions/delete/{promotion}', 'PromotionController@destroy')->name('promotions.destroy');
+
+Route::resource('products', 'ProductController');
+Route::get('/products/delete/{product}', 'ProductController@destroy')->name('products.destroy');

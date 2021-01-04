@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cinema;
+use App\Models\Region;
+
 use Illuminate\Http\Request;
 
 class CinemaController extends Controller
@@ -14,12 +16,8 @@ class CinemaController extends Controller
      */
     public function index()
     {
-        $response = [
-            'data' => 123,
-            'message' => 'Get list successfully',
-            'success' => true
-        ];
-        return response($response);
+        $model = Cinema::with('region', 'images')->orderBy('name', 'asc')->paginate(5);
+        return view('cinemas.index', ['collection' => $model]);
     }
 
     /**
@@ -29,7 +27,8 @@ class CinemaController extends Controller
      */
     public function create()
     {
-        //
+        $regions = Region::all();
+        return view('cinemas.create', ['collection' => $regions]);
     }
 
     /**
@@ -40,7 +39,19 @@ class CinemaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->only(['name', 'description', 'region_id']);
+        $inputs['type'] = 1;
+        $inputs['status'] = 1;
+        $cinema = Cinema::firstOrCreate($inputs);
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/cinemas', 'public');
+            if(isset($path)) {
+                $cinema->images()->create(['url' => '/storage/'. $path]);
+            }
+        }
+
+        return redirect('cinemas')->with('message', trans('message.cinemas.create_success'));
     }
 
     /**
@@ -62,7 +73,9 @@ class CinemaController extends Controller
      */
     public function edit(Cinema $cinema)
     {
-        //
+        $regions = Region::all();
+
+        return view('cinemas.edit', ['model' => $cinema, 'collection' => $regions]);
     }
 
     /**
@@ -74,7 +87,21 @@ class CinemaController extends Controller
      */
     public function update(Request $request, Cinema $cinema)
     {
-        //
+        $inputs = $request->only(['name', 'description', 'region_id']);
+
+        $cinema->update($inputs);
+        $cinema->save();
+
+        if($request->hasFile('file')) {
+            $path = $request->file('file')->store('images/cinemas', 'public');
+            if(isset($path)) {
+                $cinema->images()->update(['url' => '/storage/'. $path]);
+            }
+        }
+    
+        $cinema->refresh();
+
+        return redirect('cinemas')->with('message', trans('message.cinemas.update_success'));
     }
 
     /**
@@ -85,6 +112,8 @@ class CinemaController extends Controller
      */
     public function destroy(Cinema $cinema)
     {
-        //
+        $cinema->images()->delete();
+        $cinema->delete();
+        return redirect('cinemas')->with('message', trans('message.cinemas.delete_success'));
     }
 }

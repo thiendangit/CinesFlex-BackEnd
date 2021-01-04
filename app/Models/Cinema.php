@@ -60,6 +60,10 @@ class Cinema extends Model
         return $this->hasMany(MovieScreen::class);
     }
 
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
     /**
      * Get the cinema's image.
      */
