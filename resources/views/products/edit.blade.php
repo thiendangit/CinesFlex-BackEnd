@@ -25,7 +25,7 @@
   <div class="content">
     <div class="container-fluid">
      <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" style="margin-bottom: 100px;">
         <form action="{{ route('products.update', ['product' => $model]) }}" method="post" enctype="multipart/form-data">
           @csrf
           @method('PUT')

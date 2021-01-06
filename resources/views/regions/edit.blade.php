@@ -25,7 +25,7 @@
   <div class="content">
     <div class="container-fluid">
      <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" style="margin-bottom: 100px;">
         <form action="{{ route('regions.update', ['region' => $model]) }}" method="post">
           @csrf
           @method('PUT')

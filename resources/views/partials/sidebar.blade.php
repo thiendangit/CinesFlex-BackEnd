@@ -81,7 +81,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link">
+              <a href="{{ route('promotions.index') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   {{ trans('message.sidebar.promotion') }}
@@ -93,6 +93,14 @@
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   {{ trans('message.sidebar.product') }}
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('movies.index') }}" class="nav-link">
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  {{ trans('message.sidebar.movie') }}
                 </p>
               </a>
             </li>

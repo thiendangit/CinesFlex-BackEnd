@@ -42,7 +42,7 @@
               <th scope="col">{{ trans('message.cinemas.photo') }}</th>
               <th scope="col">{{ trans('message.cinemas.name') }}</th>
               <th scope="col">{{ trans('message.cinemas.region') }}</th>
-              <th scope="col">{{ trans('message.cinemas.description') }}</th>
+              {{-- <th scope="col">{{ trans('message.cinemas.description') }}</th> --}}
               <th scope="col">{{ trans('message.home.action') }}</th>
             </tr>
           </thead>
@@ -56,7 +56,7 @@
               </td>
               <td>{{ $item->name }}</td>
               <td>{{ $item->region->name ?? '' }}</td>
-              <td>{{ $item->description }}</td>
+              {{-- <td>{{ $item->description }}</td> --}}
               <td>
                 <a href="{{ route('cinemas.edit', ['cinema' => $item]) }}" class="btn btn-primary">{{ trans('message.home.edit_btn') }}</a>
                 <a href="{{ route('cinemas.destroy', ['cinema' => $item]) }}" class="btn btn-danger">{{ trans('message.home.delete_btn') }}</a>

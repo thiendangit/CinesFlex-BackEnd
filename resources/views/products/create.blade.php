@@ -47,7 +47,7 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="name">{{ trans('message.products.price') }}</label>
+              <label for="price">{{ trans('message.products.price') }}</label>
               <span style="color: red">*</span>
               <input type="number" class="form-control" id="price" name="price" placeholder="Price" required>
             </div>
