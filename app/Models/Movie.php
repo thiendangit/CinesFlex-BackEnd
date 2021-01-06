@@ -53,4 +53,9 @@ class Movie extends Model
     {
         return $this->hasOne(MovieDetail::class);
     }
+
+    public function show_times()
+    {
+        return $this->hasMany(MovieScreen::class);
+    }
 }

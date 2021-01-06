@@ -43,7 +43,7 @@ class PromotionController extends Controller
     {
         $inputs = $request->only(['title', 'description', 'type', 'date_begin', 'date_end']);
         $inputs['status'] = 1;
-        $promotion = promotion::firstOrCreate($inputs);
+        $promotion = Promotion::firstOrCreate($inputs);
 
         if($inputs['type'] == 2) { // voucher
             $inputVouchers['promotion_id'] = $promotion->id;
@@ -103,7 +103,6 @@ class PromotionController extends Controller
     public function update(Request $request, Promotion $promotion)
     {
         $inputs = $request->only(['title', 'description', 'type', 'date_begin', 'date_end']);
-
         $promotion->update($inputs);
         $promotion->save();
 
