@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('homes');
 });
 
 Route::get('/clear-cache', function() {
@@ -36,7 +36,6 @@ Route::get('/admin', function() {
 
 Route::resources([
     'movies'        => MovieController::class,
-    'products'      => ProductController::class,
 ]);
 
 Route::resource('regions', 'RegionController');

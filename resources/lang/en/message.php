@@ -9,6 +9,7 @@ return [
         'screen' => 'Screen',
         'promotion' => 'Promotion',
         'product' => 'Product',
+        'movie' => 'Movie'
     ],
 
     'home' => [
@@ -116,6 +117,27 @@ return [
         'delete_success' => 'Delete successfully',
     ],
 
+    'promotions' => [
+        'title' => 'Promotion Page',
+        'promotions' => 'Promotions',
+        'breadcrumb' => 'Promotion',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Promotion',
+        'update' => 'Update Promotion',
+        'title_name' => 'Title',
+        'photo' => 'Photo',
+        'reference' => 'Reference',
+        'value' => 'Value',
+        'date_begin' => 'Date begin',
+        'date_end' => 'Date end',
+        'type' => 'Type',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ], 
+
     'products' => [
         'title' => 'Product Page',
         'products' => 'Products',
@@ -124,6 +146,25 @@ return [
         'breadcrumb_update' => 'Update',
         'create' => 'Create Product',
         'update' => 'Update Product',
+        'name' => 'Name',
+        'photo' => 'Photo',
+        'reference' => 'Reference',
+        'price' => 'Price',
+        'type' => 'Type',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ], 
+
+    'movies' => [
+        'title' => 'Movie Page',
+        'moviess' => 'Movies',
+        'breadcrumb' => 'Movie',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Movie',
+        'update' => 'Update Movie',
         'name' => 'Name',
         'photo' => 'Photo',
         'reference' => 'Reference',

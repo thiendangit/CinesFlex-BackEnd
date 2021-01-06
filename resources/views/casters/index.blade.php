@@ -41,7 +41,7 @@
             <tr>
               <th scope="col">{{ trans('message.casters.photo') }}</th>
               <th scope="col">{{ trans('message.casters.name') }}</th>
-              <th scope="col">{{ trans('message.casters.description') }}</th>
+              {{-- <th scope="col">{{ trans('message.casters.description') }}</th> --}}
               <th scope="col">{{ trans('message.home.action') }}</th>
             </tr>
           </thead>
@@ -54,7 +54,7 @@
                 @endif
               </td>
               <td>{{ $item->name }}</td>
-              <td>{{ $item->description }}</td>
+              {{-- <td>{{ $item->description }}</td> --}}
               <td>
                 <a href="{{ route('casters.edit', ['caster' => $item]) }}" class="btn btn-primary">{{ trans('message.home.edit_btn') }}</a>
                 <a href="{{ route('casters.destroy', ['caster' => $item]) }}" class="btn btn-danger">{{ trans('message.home.delete_btn') }}</a>

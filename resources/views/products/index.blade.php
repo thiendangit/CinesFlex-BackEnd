@@ -44,7 +44,7 @@
               <th scope="col">{{ trans('message.products.reference') }}</th>
               <th scope="col">{{ trans('message.products.type') }}</th>
               <th scope="col">{{ trans('message.products.price') }}</th>
-              <th scope="col">{{ trans('message.products.description') }}</th>
+              {{-- <th scope="col">{{ trans('message.products.description') }}</th> --}}
               <th scope="col">{{ trans('message.home.action') }}</th>
             </tr>
           </thead>
@@ -60,7 +60,7 @@
               <td>{{ $item->reference }}</td>
               <td>{{ $item->type == 1 ? 'Food' : 'Beverage' }}</td>
               <td>{{ $item->price .' Vnd'}}</td>
-              <td>{{ $item->description }}</td>
+              {{-- <td>{{ $item->description }}</td> --}}
               <td>
                 <a href="{{ route('products.edit', ['product' => $item]) }}" class="btn btn-primary">{{ trans('message.home.edit_btn') }}</a>
                 <a href="{{ route('products.destroy', ['product' => $item]) }}" class="btn btn-danger">{{ trans('message.home.delete_btn') }}</a>
