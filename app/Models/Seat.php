@@ -14,8 +14,13 @@ class Seat extends Model
 
     public $incrementing = false;
 
+    // status
     const IS_AVAILABLE = 1;
     const IS_RESERVED = 2;
+
+    // type
+    const NORMAL = 1;
+    const VIP = 2;
 
     /**
      * The attributes that are mass assignable.
