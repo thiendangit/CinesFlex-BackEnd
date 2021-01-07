@@ -11,14 +11,14 @@ use Illuminate\Support\Str;
 
 class ApiAuthController extends Controller
 {
-    public function register (Request $request) {
+    public function register(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return response(['errors' => $validator->errors()->all()]);
         }
         $request['password'] = Hash::make($request['password']);
@@ -35,14 +35,14 @@ class ApiAuthController extends Controller
         return response($response);
     }
 
-    public function login (Request $request) {
+    public function login(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]);
-        if ($validator->fails())
-        {
-            return response(['errors'=>$validator->errors()->all()]);
+        if ($validator->fails()) {
+            return response(['errors' => $validator->errors()->all()]);
         }
         $user = User::where('email', $request->email)->first();
         if ($user) {
@@ -66,14 +66,15 @@ class ApiAuthController extends Controller
             }
         } else {
             $response = [
-                'message' =>'User does not exist',
+                'message' => 'User does not exist',
                 'success' => false
             ];
             return response($response);
         }
     }
 
-    public function logout (Request $request) {
+    public function logout(Request $request)
+    {
         $token = $request->user()->token();
         $token->revoke();
         $response = [

@@ -9,7 +9,9 @@ return [
         'screen' => 'Screen',
         'promotion' => 'Promotion',
         'product' => 'Product',
-        'movie' => 'Movie'
+        'movie' => 'Movie',
+        'user' => 'User',
+        'order_history' => 'Order history',
     ],
 
     'home' => [
