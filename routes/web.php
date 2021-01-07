@@ -34,10 +34,6 @@ Route::get('/admin', function() {
     return view('home');
 });
 
-Route::resources([
-    'movies'        => MovieController::class,
-]);
-
 Route::resource('regions', 'RegionController');
 Route::get('/regions/delete/{region}', 'RegionController@destroy')->name('regions.destroy');
 
@@ -61,3 +57,6 @@ Route::get('/promotions/delete/{promotion}', 'PromotionController@destroy')->nam
 
 Route::resource('products', 'ProductController');
 Route::get('/products/delete/{product}', 'ProductController@destroy')->name('products.destroy');
+
+Route::resource('movies', 'MovieController');
+Route::get('/movies/delete/{movie}', 'MovieController@destroy')->name('movies.destroy');

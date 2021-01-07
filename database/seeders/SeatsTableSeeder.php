@@ -24,12 +24,17 @@ class SeatsTableSeeder extends Seeder
             foreach($listSeatRow as $seatRow) {
                 for($i = 0; $i <= 5; $i++) {
                     $model = new Seat();
+                    if(($i === 2 || $i === 3) && ($seatRow->reference == 'C' || $seatRow->reference == 'D')) {
+                        $type = Seat::VIP;
+                    } else {
+                        $type = Seat::NORMAL;
+                    }
                     $model->seat_row_id = $seatRow->id;
                     $model->screen_id = $screen->id;
                     $model->name = $seatRow->reference . ($i + 1);
                     $model->description = Str::random(25);
-                    $model->type = rand(Seat::IS_AVAILABLE, Seat::IS_RESERVED);
-                    $model->status = 1;
+                    $model->type = $type;
+                    $model->status = rand(Seat::IS_AVAILABLE, Seat::IS_RESERVED);
                     $model->save();
                 }
             }

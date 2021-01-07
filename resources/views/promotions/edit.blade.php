@@ -71,12 +71,12 @@
             <div class="form-group col-md-6">
               <label for="date_begin">{{ trans('message.promotions.date_begin')}}</label>
               <span style="color: red">*</span>
-              <input type="text" class="date form-control" id="datepicker" name="date_begin" value={{ $model->date_begin }}required>
+              <input type="text" class="date form-control" id="datepicker" name="date_begin" value="{{ $model->date_begin->format('d-m-Y') }}"required>
             </div>
             <div class="form-group col-md-6">
               <label for="date_end">{{ trans('message.promotions.date_end')}}</label>
               <span style="color: red">*</span>
-              <input type="text" class="date form-control" id="datepicker" name="date_end" value={{ $model->date_end }} required>
+              <input type="text" class="date form-control" id="datepicker" name="date_end" value="{{ $model->date_end->format('d-m-Y') }}" required>
             </div>
           </div>
           <div class="form-row">
