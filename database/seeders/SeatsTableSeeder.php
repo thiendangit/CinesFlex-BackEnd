@@ -20,11 +20,14 @@ class SeatsTableSeeder extends Seeder
         $listScreen  = Screen::all();
         $listSeatRow  = SeatRow::all();
 
+        $vipCol = ['1, 2, 3, 4'];
+        $vipRow = ['B, C, D, E'];
+
         foreach($listScreen as $screen) {
             foreach($listSeatRow as $seatRow) {
                 for($i = 0; $i <= 5; $i++) {
                     $model = new Seat();
-                    if(($i === 2 || $i === 3) && ($seatRow->reference == 'C' || $seatRow->reference == 'D')) {
+                    if(in_array($i, $vipCol) && in_array($seatRow->reference, $vipRow)) {
                         $type = Seat::VIP;
                     } else {
                         $type = Seat::NORMAL;
