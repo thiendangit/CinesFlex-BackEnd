@@ -38,6 +38,7 @@ class MovieScreenController extends Controller
                 $query->where('movie_id', $movie_id);
             }
             $query->whereBetween('show_time',[$today, $tomorrow]);
+            $query->orderBy('show_time', 'asc');
         }])->get();
 
         $data = [];
@@ -109,6 +110,7 @@ class MovieScreenController extends Controller
         $cinemas = Cinema::where('id', $inputs['cinema_id'])->with(['show_times' => function($query) use ($movie_id, $today, $next5Day) {
             $query->where('movie_id', $movie_id);
             $query->whereBetween('show_time',[$today, $next5Day]);
+            $query->orderBy('show_time', 'asc');
         }])->get();
 
         $dayOfWeeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];

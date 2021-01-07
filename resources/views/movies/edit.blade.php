@@ -57,7 +57,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="description">{{ trans('message.movies.description')}}</label>
-              <input type="text" class="form-control" id="description" name="description" value="{{ $model->description }}" placeholder="Description">
+              <input type="text" class="form-control" id="description" name="description" value="{{ $model->detail->description }}" placeholder="Description">
             </div>
           </div>
           <div class="form-row">
