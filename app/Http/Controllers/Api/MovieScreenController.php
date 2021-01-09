@@ -33,10 +33,10 @@ class MovieScreenController extends Controller
         $today = Carbon::today();
         $tomorrow = Carbon::tomorrow();
 
-        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with(['show_times' => function($query) use ($movie_id, $today, $tomorrow) {
+        $listCinema = Cinema::where('region_id', $inputs['region_id'])->with(['images','show_times' => function($query) use ($movie_id, $today, $tomorrow) {
             if($movie_id !== '') {
                 $query->where('movie_id', $movie_id);
-            }
+            }   
             $query->whereBetween('show_time',[$today, $tomorrow]);
             $query->orderBy('show_time', 'asc');
         }])->get();
@@ -69,7 +69,9 @@ class MovieScreenController extends Controller
                     'description' => $cinema->description,
                     'type' => $cinema->type,
                     'status' => $cinema->status,
-                    'show_times' => $showTime
+                    'show_times' => $showTime,
+                    'images' => $cinema->images
+                
                 ]);
             }
         }

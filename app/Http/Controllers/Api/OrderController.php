@@ -174,7 +174,7 @@ class OrderController extends Controller
                 'reference' => 'TIC' . Str::random(6),
                 'price' => $ticketPrice ?? 50000,
             ]);
-            $seat = Seat::whereId($seat_id)->update(['type' => Seat::IS_AVAILABLE]);
+            $seat = Seat::whereId($seat_id)->update(['status' => Seat::IS_AVAILABLE]);
             array_push($tickets, $ticket);
         }
         return $tickets;
