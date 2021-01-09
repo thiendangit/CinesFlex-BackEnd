@@ -12,6 +12,7 @@ return [
         'movie' => 'Movie',
         'user' => 'User',
         'order_history' => 'Order history',
+        'gift' => 'Gift',
     ],
 
     'home' => [
@@ -189,4 +190,23 @@ return [
         'update_success' => 'Update successfully',
         'delete_success' => 'Delete successfully',
     ], 
+
+    'gifts' => [
+        'title' => 'Gift Page',
+        'gifts' => 'Gifts',
+        'breadcrumb' => 'Gift',
+        'breadcrumb_create' => 'Create',
+        'breadcrumb_update' => 'Update',
+        'create' => 'Create Gift',
+        'update' => 'Update Gift',
+        'title_name' => 'Title',
+        'photo' => 'Photo',
+        'coin' => 'Coin',
+        'discount' => 'Discount',
+        'type' => 'Type',
+        'description' => 'Description',
+        'create_success' => 'Create successfully',
+        'update_success' => 'Update successfully',
+        'delete_success' => 'Delete successfully',
+    ],
 ];

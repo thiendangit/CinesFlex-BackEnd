@@ -129,7 +129,7 @@
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
 
-                    <button class="btn btn-danger">CLICK</button>
+                    
                 </div>
             </div>
         </div>
