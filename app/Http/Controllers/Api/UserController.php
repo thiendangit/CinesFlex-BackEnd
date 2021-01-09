@@ -8,10 +8,20 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function getProfile()
+    {
+        $user = Auth::user();
+      
+        $response = [
+            'data' => $user ?? null,
+            'message' => 'Get data successfully',
+            'success' => true
+        ];
+        return response($response);
+    }
 
     public function updateProfile(Request $request)
     {
-
         $inputs = $request->all();
         $user = Auth::user();
         foreach($inputs as $data) {

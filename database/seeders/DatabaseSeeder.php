@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(2)->create();
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(RegionsTableSeeder::class);
@@ -29,7 +28,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MovieScreensTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
         $this->call(PromotionsTableSeeder::class);
-
-
+        $this->call(GiftsTableSeeder::class);
     }
 }

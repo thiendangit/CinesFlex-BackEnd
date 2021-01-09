@@ -34,6 +34,7 @@ Route::group(['namespace' => 'Api'], function() {
         'products'      => ProductController::class,
         'users'         => UserController::class,
         'promotions'    => PromotionController::class,
+        'gifts'         => GiftController::class,
     ]);
 
     // movie scren
@@ -52,7 +53,6 @@ Route::group(['namespace' => 'Api'], function() {
     // voucher
     Route::post('/vouchers/apply', 'VoucherController@apply');
     
-
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -67,6 +67,7 @@ Route::middleware('auth:api')->group(function () {
 
         // user
         Route::post('/users/update-profile', 'UserController@updateProfile');
+        Route::post('/users/get-profile', 'UserController@getProfile');
     });
 
 });

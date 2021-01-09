@@ -26,6 +26,7 @@ class UsersTableSeeder extends Seeder
         $admin->email_verified_at = now();
         $admin->password = Hash::make('123456'); // 123456
         $admin->remember_token = Str::random(10);
+        $admin->point = 0;
         $admin->type = 1;
         $admin->status = 1;
         $admin->save();

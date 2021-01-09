@@ -60,3 +60,6 @@ Route::get('/products/delete/{product}', 'ProductController@destroy')->name('pro
 
 Route::resource('movies', 'MovieController');
 Route::get('/movies/delete/{movie}', 'MovieController@destroy')->name('movies.destroy');
+
+Route::resource('gifts', 'GiftController');
+Route::get('/gifts/delete/{gift}', 'GiftController@destroy')->name('gifts.destroy');
