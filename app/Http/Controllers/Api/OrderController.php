@@ -114,7 +114,7 @@ class OrderController extends Controller
         if(isset($order)) {
             $orderId = $order->id;
             $user = Auth::user();
-            $point = $user->point + around($order->paid / 10000); 
+            $point = $user->point + round($order->paid / 10000); 
 
             $user->point = $point;
             $user->save();
