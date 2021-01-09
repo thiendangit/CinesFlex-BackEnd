@@ -114,9 +114,9 @@ class OrderController extends Controller
         if(isset($order)) {
             $orderId = $order->id;
             $user = Auth::user();
-            $point = $user->point + round($order->paid * 5 / 100); 
+            $point = $user->point + round($order->paid * 0.005 / 100); 
 
-            $user->point = $point;
+            $user->point = number_format($point, 2);;
             $user->save();
             
             foreach($tickets as $ticket) {

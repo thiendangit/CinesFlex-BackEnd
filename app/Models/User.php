@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'type',
-        'status'
+        'status',
+        'point'
     ];
 
     /**
@@ -52,7 +53,8 @@ class User extends Authenticatable
         'email' => 'string',
         'type' => 'integer',
         'status' => 'integer',
-        'email_verified_at' => 'datetime'
+        'email_verified_at' => 'datetime',
+        'point' => 'float'
     ];
 
     public function roles()
