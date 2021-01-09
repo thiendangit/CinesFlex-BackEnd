@@ -52,7 +52,6 @@ Route::group(['namespace' => 'Api'], function() {
 
     // voucher
     Route::post('/vouchers/apply', 'VoucherController@apply');
-    
 });
 
 Route::middleware('auth:api')->group(function () {
@@ -68,6 +67,9 @@ Route::middleware('auth:api')->group(function () {
         // user
         Route::post('/users/update-profile', 'UserController@updateProfile');
         Route::post('/users/get-profile', 'UserController@getProfile');
+        
+        // gift
+        Route::post('/gifts/get-gift', 'GiftController@getGift');
     });
 
 });

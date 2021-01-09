@@ -25,6 +25,9 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->string('social_provider')->nullable();
+            $table->string('social_id')->nullable();
+
         });
     }
 

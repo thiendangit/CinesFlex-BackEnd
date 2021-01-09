@@ -15,7 +15,7 @@ class CreateVouchersTable extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('promotion_id');
+            $table->uuid('promotion_id')->nullable();
             $table->string('reference');
             $table->string('title');
             $table->integer('value')->default(0);
