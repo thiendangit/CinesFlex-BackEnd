@@ -226,6 +226,8 @@ return [
         'total_paid' => 'Total Paid',
         'discount' => 'Discount',
         'description' => 'Description',
+        'created_at' => 'Created At',
+
         'create_success' => 'Create successfully',
         'update_success' => 'Update successfully',
         'delete_success' => 'Delete successfully',

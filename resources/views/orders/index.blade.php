@@ -43,6 +43,7 @@
               <th scope="col">{{ trans('message.orders.total') }}</th>
               <th scope="col">{{ trans('message.orders.discount') }}</th>
               <th scope="col">{{ trans('message.orders.total_paid') }}</th>
+              <th scope="col">{{ trans('message.orders.created_at') }}</th>
 
               {{-- <th scope="col">{{ trans('message.orders.description') }}</th> --}}
               {{-- <th scope="col">{{ trans('message.home.action') }}</th> --}}
@@ -60,6 +61,7 @@
               @endif
               <td>{{ $item->total_paid}}</td>
 
+              <td>{{ $item->created_at->format('d-m-Y')}}</td>
 
               {{-- @if($item->voucher && isset($item->voucher))
                 <td>{{ $item->voucher[0]->value . '%'}}</td>
