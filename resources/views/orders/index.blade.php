@@ -40,7 +40,10 @@
           <thead>
             <tr>
               <th scope="col">{{ trans('message.orders.reference') }}</th>
-              <th scope="col">{{ trans('message.orders.value') }}</th>
+              <th scope="col">{{ trans('message.orders.total') }}</th>
+              <th scope="col">{{ trans('message.orders.discount') }}</th>
+              <th scope="col">{{ trans('message.orders.total_paid') }}</th>
+
               {{-- <th scope="col">{{ trans('message.orders.description') }}</th> --}}
               {{-- <th scope="col">{{ trans('message.home.action') }}</th> --}}
             </tr>
@@ -49,11 +52,20 @@
             @foreach ($collection as $item)
             <tr>
               <td>{{ $item->reference}}</td>
+              <td>{{ $item->paid}}</td>
               @if($item->voucher && isset($item->voucher))
+              <td>{{ $item->voucher->value . '%'}}</td>
+              @else
+              <td>{{ 0 }}</td>
+              @endif
+              <td>{{ $item->total_paid}}</td>
+
+
+              {{-- @if($item->voucher && isset($item->voucher))
                 <td>{{ $item->voucher[0]->value . '%'}}</td>
               @else
                 <td>{{ 0 }}</td>
-              @endif
+              @endif --}}
               {{-- <td>{{ $item->description }}</td> --}}
               {{-- <td>
                 <a href="{{ route('orders.edit', ['order' => $item]) }}" class="btn btn-primary">{{ trans('message.home.edit_btn') }}</a>
