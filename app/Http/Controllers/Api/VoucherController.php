@@ -23,13 +23,16 @@ class VoucherController extends Controller
         if (isset($voucher)) {
             $now = Carbon::now();
 
-            if ($now->lt($voucher->promotion->date_begin) || $now->gt($voucher->promotion->date_end)) {
-                return [
-                    'data' => $voucher,
-                    'message' => 'Voucher is expired',
-                    'success' => false
-                ];
+            if (isset($voucher->promotion->date_begin) || isset($voucher->promotion->date_end)) {
+                if ($now->lt($voucher->promotion->date_begin) || $now->gt($voucher->promotion->date_end)) {
+                    return [
+                        'data' => $voucher,
+                        'message' => 'Voucher is expired',
+                        'success' => false
+                    ];
+                }
             }
+            
             $response = [
                 'data' => $voucher,
                 'message' => 'Apply voucher successfully',
