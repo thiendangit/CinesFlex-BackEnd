@@ -14,7 +14,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $model = Order::with('voucher')->orderBy('reference', 'asc')->paginate(5);
+        return view('orders.index', ['collection' => $model]);
     }
 
     /**

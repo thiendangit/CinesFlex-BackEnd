@@ -63,3 +63,9 @@ Route::get('/movies/delete/{movie}', 'MovieController@destroy')->name('movies.de
 
 Route::resource('gifts', 'GiftController');
 Route::get('/gifts/delete/{gift}', 'GiftController@destroy')->name('gifts.destroy');
+
+Route::resource('orders', 'OrderController');
+Route::get('/orders/delete/{order}', 'OrderController@destroy')->name('orders.destroy');
+
+Route::resource('users', 'UserController');
+Route::get('/users/delete/{user}', 'UserController@destroy')->name('users.destroy');
