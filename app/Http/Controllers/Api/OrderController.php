@@ -32,11 +32,11 @@ class OrderController extends Controller
         if(sizeof($listOrder) > 0) {
             foreach($listOrder as $order) {
                 foreach($order->details as $detailable) {
-                    if($detailable->order_detailable_type == 'App\Models\Product') {
+                    if(isset($detailable->order_detailable_type) && $detailable->order_detailable_type == 'App\Models\Product') {
                         $product = Product::where('id', $detailable->order_detailable_id)->with('images')->first();
                         $detailable->order_detailable->images = $product->images;
                         $detailable->type = 1;
-                    } else if($detailable->order_detailable_type == 'App\Models\Ticket'){
+                    } else if(isset($detailable->order_detailable_type) && $detailable->order_detailable_type == 'App\Models\Ticket'){
                         $ticket = Ticket::where('id', $detailable->order_detailable_id)->with('seat')->first();
                         $showTime = MovieScreen::where('id', $ticket->movie_screen_id)->first();
                         $movie = Movie::where('id', $showTime->movie_id)->with('detail.images', 'detail.categories')->first();
@@ -180,7 +180,7 @@ class OrderController extends Controller
                 'reference' => 'TIC' . Str::random(6),
                 'price' => $ticketPrice ?? 50000,
             ]);
-            $seat = Seat::whereId($seat_id)->update(['status' => Seat::IS_AVAILABLE]);
+            $seat = Seat::whereId($seat_id)->update(['status' => Seat::IS_RESERVED]);
             array_push($tickets, $ticket);
         }
         return $tickets;

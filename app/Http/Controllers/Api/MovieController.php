@@ -44,6 +44,15 @@ class MovieController extends Controller
     {
         $data = Movie::with('detail.casters.images', 'detail.categories', 'detail.languages', 'detail.images')->get();
 
+        // if($data->count > 0){
+        //     $listMovieIsNowShowing = [];
+        //     foreach($data as $movie) {
+        //         if( ) {
+
+        //         }
+        //     }
+        // }
+
         $response = [
             'data' => $data,
             'message' => 'Get list successfully',
