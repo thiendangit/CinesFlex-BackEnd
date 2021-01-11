@@ -112,7 +112,8 @@ class MovieScreenController extends Controller
         $movie_id = $inputs['movie_id'];
         $cinemas = Cinema::where('id', $inputs['cinema_id'])->with(['show_times' => function($query) use ($movie_id, $today, $next5Day) {
             $query->where('movie_id', $movie_id);
-            $query->whereBetween('show_time',[$today, $next5Day]);
+            $query->whereDate('show_time', '>=', $today);
+            $query->whereDate('show_time', '<', $next5Day);
             $query->orderBy('show_time', 'asc');
         }])->get();
 
