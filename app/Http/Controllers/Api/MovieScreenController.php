@@ -37,7 +37,8 @@ class MovieScreenController extends Controller
             if($movie_id !== '') {
                 $query->where('movie_id', $movie_id);
             }   
-            $query->whereBetween('show_time',[$today, $tomorrow]);
+            $query->whereDate('show_time', '>=', $today);
+            $query->whereDate('show_time', '<', $tomorrow);
             $query->orderBy('show_time', 'asc');
         }])->get();
 
