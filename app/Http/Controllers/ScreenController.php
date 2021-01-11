@@ -46,13 +46,20 @@ class ScreenController extends Controller
         $inputs['status'] = 1;
         $screen = Screen::firstOrCreate($inputs);
         $listSeatRow  = SeatRow::all();
+        $vipCol = [1, 2, 3, 4];
+        $vipRow = ['A', 'B', 'C', 'D', 'E', 'F'];
         foreach($listSeatRow as $seatRow) {
             for($i = 0; $i <= 5; $i++) {
+                if(in_array($i, $vipCol) && in_array($seatRow->reference, $vipRow)) {
+                    $type = Seat::VIP;
+                } else {
+                    $type = Seat::NORMAL;
+                }
                 $model = new Seat();
                 $model->seat_row_id = $seatRow->id;
                 $model->screen_id = $screen->id;
                 $model->name = $seatRow->reference . ($i + 1);
-                $model->type = Seat::IS_AVAILABLE;
+                $model->type = $type;
                 $model->status = 1;
                 $model->save();
             }
