@@ -51,10 +51,10 @@ class MovieController extends Controller
             $listMovieIsNowShowing = [];
             foreach($movies as $movie) {
                 if (isset($movie->detail) && $now->gt($movie->detail->date_begin)) {
-                    $movie->update(['type' => Movie::NOW_SHOWING]);
+                    $movie->update(['type' => Movie::IS_COMMING]);
                     $movie->save();
                 } else {
-                    $movie->update(['type' => Movie::IS_COMMING]);
+                    $movie->update(['type' => Movie::NOW_SHOWING]);
                     $movie->save();
                 }
 
