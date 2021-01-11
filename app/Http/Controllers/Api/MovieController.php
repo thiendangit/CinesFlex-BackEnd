@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Movie;
 use App\Models\MovieDetail;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -42,16 +43,28 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $data = Movie::with('detail.casters.images', 'detail.categories', 'detail.languages', 'detail.images')->get();
+        $movies = Movie::with('detail.casters.images', 'detail.categories', 'detail.languages', 'detail.images')->get();
+        $now = Carbon::now();
 
-        // if($data->count > 0){
-        //     $listMovieIsNowShowing = [];
-        //     foreach($data as $movie) {
-        //         if( ) {
+        $data = [];
+        if($movies->count() > 0){
+            $listMovieIsNowShowing = [];
+            foreach($movies as $movie) {
+                if (isset($movie->detail) && $now->gt($movie->detail->date_begin)) {
+                    $movie->update(['type' => Movie::NOW_SHOWING]);
+                    $movie->save();
+                }
 
-        //         }
-        //     }
-        // }
+                if(isset($movie->detail) && $now->lt($movie->detail->date_end)) {
+                    $movie->update(['status' => 2]); // not available
+                    $movie->save();
+                }
+
+                if($movie->status == 1) {
+                    array_push($data, $movie); 
+                }
+            }
+        }
 
         $response = [
             'data' => $data,
