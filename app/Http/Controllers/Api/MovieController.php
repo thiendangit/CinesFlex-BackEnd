@@ -53,6 +53,9 @@ class MovieController extends Controller
                 if (isset($movie->detail) && $now->gt($movie->detail->date_begin)) {
                     $movie->update(['type' => Movie::NOW_SHOWING]);
                     $movie->save();
+                } else {
+                    $movie->update(['type' => Movie::IS_COMMING]);
+                    $movie->save();
                 }
 
                 if(isset($movie->detail) && $now->gt($movie->detail->date_end)) {
