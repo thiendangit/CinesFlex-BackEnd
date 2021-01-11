@@ -55,8 +55,11 @@ class MovieController extends Controller
                     $movie->save();
                 }
 
-                if(isset($movie->detail) && $now->lt($movie->detail->date_end)) {
+                if(isset($movie->detail) && $now->gt($movie->detail->date_end)) {
                     $movie->update(['status' => 2]); // not available
+                    $movie->save();
+                } else {
+                    $movie->update(['status' => 1]); // available
                     $movie->save();
                 }
 
