@@ -173,12 +173,17 @@ class OrderController extends Controller
     private function addTicket($inputs, $ticketPrice) {
         $tickets = [];
         foreach($inputs['seat_ids'] as $seat_id) {
+            $seat = Seat::find($seat_id);
+            $fee_percent = 0;
+            if($seat->type == Seat::VIP) {
+                $fee_percent = $seat->fee_percent;
+            }
             $ticket = Ticket::create([
                 'booker_id' => $inputs['booker_id'],
                 'movie_screen_id' => $inputs['show_time'],
                 'seat_id' => $seat_id,
                 'reference' => 'TIC' . Str::random(6),
-                'price' => $ticketPrice ?? 50000,
+                'price' => ($ticketPrice ?? 50000) * ($fee_percent + 100) / 100,
             ]);
             $seat = Seat::whereId($seat_id)->update(['status' => Seat::IS_RESERVED]);
             array_push($tickets, $ticket);
