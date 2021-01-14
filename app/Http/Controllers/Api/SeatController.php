@@ -35,7 +35,8 @@ class SeatController extends Controller
                     'name' => $seat->name,
                     'seat_row' => $seat->seatRow->reference,
                     'type' => $seat->type,
-                    'status' => $seat->status
+                    'status' => $seat->status,
+                    'fee_percent' => $seat->fee_percent ?? 0
                 ]);
             }
         }

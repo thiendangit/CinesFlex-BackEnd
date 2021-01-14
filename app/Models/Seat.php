@@ -22,6 +22,8 @@ class Seat extends Model
     const NORMAL = 1;
     const VIP = 2;
 
+    protected $appends = ['fee_percent'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -62,6 +64,11 @@ class Seat extends Model
         'type' => 'integer',
         'status' => 'integer'
     ];
+
+    public function getFeePercentAttribute()
+    {
+        return $this->type == Seat::VIP ? 10 : 0;
+    }
 
     public function seatRow()
     {
