@@ -21,7 +21,7 @@ class SeatsTableSeeder extends Seeder
         $listSeatRow  = SeatRow::all();
 
         $vipCol = [1, 2, 3, 4];
-        $vipRow = ['A', 'B', 'C', 'D', 'E', 'F'];
+        $vipRow = ['B', 'C', 'D', 'E'];
 
         foreach($listScreen as $screen) {
             foreach($listSeatRow as $seatRow) {

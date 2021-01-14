@@ -47,7 +47,7 @@ class ScreenController extends Controller
         $screen = Screen::firstOrCreate($inputs);
         $listSeatRow  = SeatRow::all();
         $vipCol = [1, 2, 3, 4];
-        $vipRow = ['A', 'B', 'C', 'D', 'E', 'F'];
+        $vipRow = ['B', 'C', 'D', 'E'];
         foreach($listSeatRow as $seatRow) {
             for($i = 0; $i <= 5; $i++) {
                 if(in_array($i, $vipCol) && in_array($seatRow->reference, $vipRow)) {
