@@ -15,7 +15,9 @@ use App\Models\Movie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
+use Mail;
+use App\Mail\TicketBooked;
 class OrderController extends Controller
 {
     /**
@@ -143,6 +145,18 @@ class OrderController extends Controller
                 }
             }
 
+            try {
+                $recipident = $user->email;
+                $details = [
+                    'title' => $order->reference,
+                    'body' => 'Plese attach approve mail to cinema when you get ticket!!'
+                ];
+
+                \Mail::to($recipident)->send(new TicketBooked($details));
+
+            } catch (\Throwable $e) {
+                Log::info($e->getMessage());
+            }
         }
         
         $response = [
